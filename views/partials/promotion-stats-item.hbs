@@ -1,0 +1,52 @@
+  <!-- ITEM - Promotion stats-->
+        <div class="ui segment stats-promo" style="display:none;">
+
+            <!--Statistic chart-->
+            <div class="ui vertical segment">
+                <canvas id="lineChart" width="400" height="400"></canvas>
+            </div>
+
+            <!--Statistic figures-->
+            <div class="ui vertical segment ">
+                <div class="ui statistics">
+                    <div class="statistic">
+                        <div class="value">
+                            <i class="unhide icon"></i>22.900
+                        </div>
+                        <div class="label">
+                            Visualizaciones
+                        </div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value">
+                            <i class="users icon"></i>1.200
+                        </div>
+                        <div class="label">
+                            Participantes
+                        </div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value">
+                            <i class="empty star icon"></i> 129.000
+                        </div>
+                        <div class="label">
+                            Puntos acumulados
+                        </div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value">
+                            <i class="gift icon"></i> 12
+                        </div>
+                        <div class="label">
+                            Ganadores
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Winners-->
+            {{>winners-segment}}
+
+            <!--Participants-->
+            {{participants-segment}}
+        </div>

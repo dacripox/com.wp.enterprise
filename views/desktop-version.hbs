@@ -1,0 +1,62 @@
+{{!< default}} 
+
+
+{{#contentFor 'pageStyles'}} 
+<style>
+</style>
+{{/contentFor}} 
+
+{{#contentFor 'googleAnalyticsScripts'}}
+<script type="text/javascript">
+</script>
+{{/contentFor}} 
+
+{{#contentFor 'facebookScripts'}}
+<script type="text/javascript">
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.8";
+        fjs.parentNode.insertBefore(js, fjs);
+    } (document, 'script', 'facebook-jssdk'));
+</script>
+{{/contentFor}} 
+
+{{#contentFor 'OneSignalScripts'}}
+<script type="text/javascript">
+
+</script>
+{{/contentFor}}
+
+
+<div class="ui main container">
+
+    <p>Usuario: {{promoId}}</p>
+    <p>Amigo: {{refFriend}}</p>
+    <p>Amigo: {{userId}}</p>
+
+    <!--Steps Menu-->
+    {{>steps-menu}}
+    <!--end Steps Menu-->
+
+
+    <!--Promotions List - Menu Item-->
+    {{>promotions-list-item}}
+    <!--end Promotions List - Menu Item-->
+
+    <!--Edit Promotion - Menu Item-->
+    {{>edit-promotion-item}}
+    <!--end Edit Promotion - Menu Item-->
+
+    <!--Promotion Stats - Menu Item-->
+    {{>promotion-stats-item}}
+    <!--end Promotion Stats - Menu Item-->
+
+    <!--Footer-->
+    {{>footer}}
+    <!--end Footer-->
+
+</div>
+<!--end .main.container-->
