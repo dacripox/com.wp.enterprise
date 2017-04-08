@@ -1,12 +1,13 @@
 <div class="item">
     <div class="right floated content">
-        <div class="ui button"><i class=" pencil icon"></i>Modificar</div>
+        {{#unless promoEnded}}  <div class="ui button"><i class=" pencil icon"></i>Modificar</div> {{/unless}}
+        <div class="ui button middle aligned"><i class="line chart icon"></i>Estadísticas</div>
     </div>
     <i class="yellow large newspaper middle aligned icon"></i>
 
     <div class="content">
 
-        <a class="header">Promoción 11111</a>
+        <a class="header">{{promoTitle}}</a>
 
         <div class="description">
             <p>Pendiente de lanzar</p>
@@ -14,16 +15,15 @@
         <div class="extra">
             <div class="meta">
                 <span class="">
-                            <i class="calendar icon" ></i>21/12/2017
+                            <i class="calendar icon" ></i>{{dateToHuman startDate}} - {{dateToHuman endDate}}
                         </span>
                 <span class="">
-                            <i class="users icon"></i>0
+                            <i class="users icon"></i>{{participNumber}}
                         </span>
                 <span class="">
-                            <i class="unhide icon"></i>0
+                            <i class="gift icon"></i>{{winnersNumber}}
                         </span>
             </div>
-
         </div>
     </div>
 </div>

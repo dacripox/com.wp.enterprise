@@ -1,6 +1,21 @@
 let fetch = require('isomorphic-fetch');
 var mobileDetect = require('mobile-detect');
 
+let getPromotionsByCompanyId = async (companyId) => {
+    try {
+        let response = await fetch('http://localhost:3000/promotion/company/'+companyId, {method:'get'});
+        let data = await response.json();
+        if (response.status !== 200) {
+            return;
+        }
+        return data;
+    } catch (error) {
+
+        console.error('Fetch error. STATUS: ' + response.status);
+        console.error(error);
+    }
+}
+
 let newPromotion = async (promotion) => {
 
      /*   let newPromo = new FormData();
@@ -81,10 +96,11 @@ module.exports = {
     /**
      * mainController.showMainIndex()
      */
-    showMainIndex: function (req, res) {
+    showMainIndex: async function (req, res) {
         var promoId = req.params.promoId;
         var refFriend = req.params.refFriend;
 
+let promotions = await getPromotionsByCompanyId('58e3a7ec4b05fd09d0a2db2a');
 
         let md = new mobileDetect(req.headers['user-agent']);
         if (md.is('bot')) {
@@ -98,7 +114,44 @@ module.exports = {
         }
 
         //Desktop view
-        res.render('desktop-version', { title: 'No title' });
+        res.render('desktop-version', { title: 'No title', promotions:promotions });
+    },
+
+
+
+/**
+     * mainController.promotionIdAvailable()
+     */
+    promotionIdAvailable: async function (req, res) {
+        var promoId = req.params.promoId;
+       
+    try {
+        let response = await fetch('http://localhost:3000/promotion/available/'+promoId, {method:'GET'});
+        let data = await response.json();
+        if (response.status !== 200) {
+             return res.status(500).json({response:response});
+        }
+        return  res.status(200).json(data);
+
+    } catch (error) {
+
+        console.error('Fetch error. STATUS: ' + response.status);
+        console.error(error);
+        return res.status(500).json({
+            error: error
+        });
+    }
+        
+    },
+
+/**
+     * mainController.getPromotions()
+     */
+    getPromotions: async function (req, res) {
+      let companyId = req.cookies.companyId;
+       
+    return await getPromotionsByCompanyId(companyId);
+        
     },
 
 

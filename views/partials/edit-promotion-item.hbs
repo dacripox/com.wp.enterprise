@@ -49,7 +49,7 @@
                             <div class="ui fluid file input action left icon">
                                 <i class="file image outline icon"></i>
                                 <input type="text" readonly>
-                                <input type="file" id="file1" name="promoImage" autocomplete="off">
+                                <input type="file" id="file1" name="promoImage" accept="image/x-png,image/jpeg" autocomplete="off">
                                 <div class="ui button">
                                     Seleccionar...
                                 </div>
@@ -126,7 +126,7 @@
                             <div class="ui fluid file input action left icon">
                                 <i class="file image outline icon"></i>
                                 <input type="text" readonly>
-                                <input type="file" id="file2" name="socialImage" autocomplete="off">
+                                <input type="file" id="file2" name="socialImage" accept="image/x-png,image/jpeg"  autocomplete="off">
                                 <div class="ui button">
                                     Seleccionar...
                                 </div>
@@ -139,7 +139,8 @@
                                 <div class="ui calendar" id="rangestart">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
-                                        <input type="text" name="startDate" placeholder="Inicio" autocomplete="off">
+                                        <input type="text"  placeholder="Inicio" autocomplete="off">
+
                                     </div>
                                 </div>
                             </div>
@@ -148,10 +149,12 @@
                                 <div class="ui calendar" id="rangeend">
                                     <div class="ui input left icon">
                                         <i class="calendar icon"></i>
-                                        <input type="text" name="endDate" placeholder="Fín" autocomplete="off">
+                                        <input type="text" placeholder="Fín" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
+                                        <input type="text" class="startDateHidden" name="startDate" placeholder="Inicio" autocomplete="off" style="display: none;">
+                                        <input type="text" class="endDateHidden" name="endDate" placeholder="Fín" autocomplete="off" style="display: none;">
                         </div>
 
 
@@ -203,7 +206,7 @@
                                 <label>Estoy de acuerdo cun los términos y condiciones para crear/modificar la promoción</label>
                             </div>
                         </div>
-                        <button class="ui button sendPromo" > <i class="announcement icon"></i>Crear/Guardar promoción (modificada)</button>
+                       
 
 </form> 
                     </div>
@@ -217,6 +220,7 @@
 
                         <button class="ui button disabled back"><i class="left chevron icon"></i>Atrás</button>
                         <button class="ui button next">Siguiente<i class="right chevron icon"></i></button>
+                         <button class="ui button sendPromo" style="display: none;"> <i class="announcement icon"></i>Crear/Guardar promoción</button>
                     </div>
                 </div>
 

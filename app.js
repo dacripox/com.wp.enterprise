@@ -37,6 +37,14 @@ hbs.registerHelper("math", function(lvalue, operator, rvalue, options) {
     }[operator];
 });
 
+hbs.registerHelper("dateToHuman", function(date) {
+  let dateTime = new Date(date);
+    return dateTime.toLocaleDateString() +' - '+ dateTime.toLocaleTimeString();
+});
+
+hbs.registerHelper("not", function(obj) {
+  return !obj;
+});
 
 app.use('/assets',express.static(path.join(__dirname, 'assets')));
 app.use('/vendor',express.static(path.join(__dirname, 'vendor')));

@@ -4,34 +4,25 @@ var router = express.Router();
 
 
 /*
- * GET
- */
-router.get('/participate/:userId/:promoId', mainController.showMainIndex);
-
-/*
  * POST
  */
 
 router.post('/promotion/', mainController.createPromotion);
 
 
-
 /*
- * POST
+ * GET
  */
-router.post('/report/:userId/:promoId', mainController.showMainIndex);
 
+router.get('/available/:promoId', mainController.promotionIdAvailable);
 
-/*
- * PUT
- */
-router.put('/update-profile/:userId', mainController.showMainIndex);
 
 
 /*
- * POST
+ * GET
  */
-router.put('/update-profile-settings/:userId', mainController.showMainIndex);
+
+router.get('/promotions', mainController.getPromotions);
 
 
 module.exports = router;
