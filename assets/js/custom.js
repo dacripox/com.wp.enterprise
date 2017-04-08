@@ -1,3 +1,28 @@
+
+$('.button.sendPromo').on('click',function(e){
+  var form = $("form.promotionForm");
+   
+    $.ajax({
+            type:"POST",
+            url:"/api/promotion",
+            data:$(form).serialize(),//only input
+            success: function(response){
+                console.log(response);  
+            },
+            error: function(error){
+              console.error(error);
+            }
+
+           
+    });
+
+     e.preventDefault();
+    return false;
+});
+
+
+
+
 /*Check if user adds webapp to HomeScreen*/
 window.addEventListener('beforeinstallprompt', function(e) {
  // beforeinstallprompt Event fired
@@ -119,13 +144,31 @@ function markerDragHandler() {
  console.log('changed position');
  var position = marker.getPosition();
  console.log(position.toJSON());
+
+document.getElementById('lat').value = position.lat;
+ document.getElementById('lng').value = position.lng;
+// document.getElementById('postcode').value = ;
+// document.getElementById('address').value = ;
  geocoder.geocode({
   'location': position
  }, function(results, status) {
   if (status === google.maps.GeocoderStatus.OK) {
-   if (results[1]) {
-    console.log(results[1].formatted_address);
-    mapInput.value = results[1].formatted_address;
+   if (results[0]) {
+    console.log(results[0].formatted_address);
+    mapInput.value = results[0].formatted_address;
+    var zipcode;
+   for(var i=0; i < results.length; i++){
+            for(var j=0;j < results[i].address_components.length; j++){
+                for(var k=0; k < results[i].address_components[j].types.length; k++){
+                    if(results[i].address_components[j].types[k] == "postal_code"){
+                        zipcode = results[i].address_components[j].short_name;
+                        
+                        document.getElementById('postcode').value = zipcode;
+                    }
+                }
+            }
+    }
+document.getElementById('address').value = results[0].formatted_address;
    } else {
     console.log('No results found');
    }
@@ -138,14 +181,7 @@ function markerDragHandler() {
 
 $(document).ready(function() {
 
-// SPINNER DATA-API
- $(function() {
-  $('body').on('mousedown.spinner.data-api', '.spinner.button', function() {
-   var $this = $(this);
-   if ($this.data('spinner')) return;
-   $this.spinner($this.data());
-  });
- }).ready(jQuery);
+
 
  /*Particiapants table (with DataTable)*/
  $('#participants-table').DataTable({
@@ -404,9 +440,6 @@ window.history.pushState({promociones:'estadísticas'}, 'Estadísticas', '/estad
  });
 
 
-
- /*Winner number spinner input (It uses an external API)*/
- $('.ui.spinner').spinner();
 
 
 

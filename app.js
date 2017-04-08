@@ -41,6 +41,9 @@ hbs.registerHelper("math", function(lvalue, operator, rvalue, options) {
 app.use('/assets',express.static(path.join(__dirname, 'assets')));
 app.use('/vendor',express.static(path.join(__dirname, 'vendor')));
 app.use('/', mainRoutes);
+app.use('/promociones', mainRoutes);
+app.use('/editar-promocion', mainRoutes);
+app.use('/estadisticas', mainRoutes);
 app.use('/api', apiRoutes);
 
 

@@ -30,6 +30,9 @@
             </div>
 
             <div class="ui attached segment">
+                <form class="promotionForm" action="">
+
+                
                 <div class="first-form">
 
                     <div class="ui form">
@@ -39,8 +42,6 @@
                             <textarea rows="2" class="promo-title" name="promoTitle" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
                             <div id="textarea_feedback">140 caracteres restantes</div>
                         </div>
-
-
 
 
                         <div class="field">
@@ -58,12 +59,12 @@
 
                         <div class="field">
                             <label>Descripción de la promoción</label>
-                            <textarea rows="2" name="promoDescr" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
+                            <textarea rows="2" name="promoDescription" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
                         </div>
 
                         <div class="field">
                             <label>Condiciones de la promoción</label>
-                            <textarea rows="2" name="promoCond" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
+                            <textarea rows="2" name="promoLegalCond" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
                         </div>
 
                         <div class="field map">
@@ -78,17 +79,17 @@
                                 <label>Mostrar localización en la promoción.</label>
                             </div>
                         </div>
-                        <input id="lat" type="text" style="display:none">
-                        <input id="lng" type="text" style="display:none">
-                        <input id="postCode" type="text" style="display:none">
-                        <input id="address" type="text" style="display:none">
+                        <input id="lat" name="lat" type="text" style="display:none">
+                        <input id="lng" name="lng" type="text" style="display:none">
+                        <input id="postCode" name="postalCode" type="text" style="display:none">
+                        <input id="address" name="fullAddress" type="text" style="display:none">
 
 
 
 
                         <div class="field">
                             <label>Contacto de la promoción</label>
-                            <textarea rows="2" name="promoContact" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
+                            <textarea rows="2" name="promoContactDetails" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
                         </div>
 
 
@@ -109,7 +110,7 @@
                                 <div class="ui pointing  red basic label url-check-alert" style="display:none;">
                                     El nombre del enlace ya está en uso para otra promoción.
                                 </div>
-                                <input type="text" id="url-check" name="promoUrl" placeholder="invierno2020">
+                                <input type="text" id="url-check" name="promoId" placeholder="invierno2020">
 
                             </div>
 
@@ -184,14 +185,14 @@
                         <div class="field basic-membership">
                             <label for="">Facebook Pixel ID</label>
                             <div class="ui input">
-                                <input type="text" name="fbPixelId" placeholder="1010101010">
+                                <input type="text" name="facebookTrackingPixel" placeholder="1010101010">
 
                             </div>
                         </div>
                         <div class="field basic-membership">
                             <label for="">Google Tracking ID</label>
                             <div class="ui input">
-                                <input type="text" name="goTrackId" placeholder="1010101010">
+                                <input type="text" name="googleTrackingPixel" placeholder="1010101010">
 
                             </div>
                         </div>
@@ -202,9 +203,9 @@
                                 <label>Estoy de acuerdo cun los términos y condiciones para crear/modificar la promoción</label>
                             </div>
                         </div>
-                        <button class="ui button" type="submit"> <i class="announcement icon"></i>Crear/Guardar promoción (modificada)</button>
+                        <button class="ui button sendPromo" > <i class="announcement icon"></i>Crear/Guardar promoción (modificada)</button>
 
-
+</form> 
                     </div>
                 </div>
 

@@ -1,3 +1,23 @@
+
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
+// SPINNER DATA-API
+ 
+  $('body').on('mousedown.spinner.data-api', '.spinner.button', function() {
+   var $this = $(this);
+   if ($this.data('spinner')) return;
+   $this.spinner($this.data());
+  });
+ 
+
+ /*Winner number spinner input (It uses an external API)*/
+ $('.ui.spinner').spinner();
+
+
+});
+
+
 /**********************************************************
 /*
 

@@ -8,6 +8,13 @@ var router = express.Router();
  */
 router.get('/participate/:userId/:promoId', mainController.showMainIndex);
 
+/*
+ * POST
+ */
+
+router.post('/promotion/', mainController.createPromotion);
+
+
 
 /*
  * POST
