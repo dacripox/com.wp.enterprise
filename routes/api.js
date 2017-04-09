@@ -3,6 +3,14 @@ var mainController = require('../controllers/mainController.js');
 var router = express.Router();
 
 
+
+/*
+ * GET
+ */
+
+router.get('/promotion/', mainController.showPromotion);
+
+
 /*
  * POST
  */

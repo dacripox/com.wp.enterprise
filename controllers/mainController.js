@@ -1,9 +1,12 @@
 let fetch = require('isomorphic-fetch');
 var mobileDetect = require('mobile-detect');
+var md5 = require('md5');
+let request = require('request-promise');
+
 
 let getPromotionsByCompanyId = async (companyId) => {
     try {
-        let response = await fetch('http://localhost:3000/promotion/company/'+companyId, {method:'get'});
+        let response = await fetch('http://localhost:3000/promotion/company/' + companyId, { method: 'get' });
         let data = await response.json();
         if (response.status !== 200) {
             return;
@@ -16,74 +19,74 @@ let getPromotionsByCompanyId = async (companyId) => {
     }
 }
 
-let newPromotion = async (promotion) => {
 
-     /*   let newPromo = new FormData();
 
-        newPromo.append('promoId', promotion.promoId);
-        newPromo.append('promoEnabled', promotion.promoEnabled);
-        newPromo.append('startDate', promotion.startDate);
-        newPromo.append('endDate', promotion.endDate);
-        newPromo.append('promoTitle', promotion.promoTitle);
-        newPromo.append('promoLegalCond', promotion.promoLegalCond);
-        newPromo.append('promoDescription', promotion.promoDescription);
-        newPromo.append('promoContactDetails', promotion.promoContactDetails);
-        newPromo.append('promoImage', promotion.promoImage);
-        newPromo.append('socialImage', promotion.socialImage);
-        newPromo.append('winnersNumber', promotion.winnersNumber);
-        newPromo.append('showLocalization', promotion.showLocalization);
-        newPromo.append('lat', promotion.lat);
-        newPromo.append('lng', promotion.lng);
-        newPromo.append('postalCode', promotion.postalCode);
-        newPromo.append('fullAddress', promotion.fullAddress);
-        newPromo.append('companyId', promotion.companyId);
-        newPromo.append('trollNumber', promotion.trollNumber);
-        newPromo.append('shareMessages', promotion.shareMessages);
-        newPromo.append('facebookTrackingPixel', promotion.facebookTrackingPixel);
-        newPromo.append('googleTrackingPixel', promotion.googleTrackingPixel);
-*/
 
-    var fetchOptions = {
-        method: 'POST',
-        body: function(){ 
-            let newPromo = new FormData();
-
-            newPromo.append('promoId', promotion.promoId);
-            newPromo.append('promoEnabled', promotion.promoEnabled);
-            newPromo.append('startDate', promotion.startDate);
-            newPromo.append('endDate', promotion.endDate);
-            newPromo.append('promoTitle', promotion.promoTitle);
-            newPromo.append('promoLegalCond', promotion.promoLegalCond);
-            newPromo.append('promoDescription', promotion.promoDescription);
-            newPromo.append('promoContactDetails', promotion.promoContactDetails);
-            newPromo.append('promoImage', promotion.promoImage);
-            newPromo.append('socialImage', promotion.socialImage);
-            newPromo.append('winnersNumber', promotion.winnersNumber);
-            newPromo.append('showLocalization', promotion.showLocalization);
-            newPromo.append('lat', promotion.lat);
-            newPromo.append('lng', promotion.lng);
-            newPromo.append('postalCode', promotion.postalCode);
-            newPromo.append('fullAddress', promotion.fullAddress);
-            newPromo.append('companyId', promotion.companyId);
-            newPromo.append('trollNumber', promotion.trollNumber);
-            newPromo.append('shareMessages', promotion.shareMessages);
-            newPromo.append('facebookTrackingPixel', promotion.facebookTrackingPixel);
-            newPromo.append('googleTrackingPixel', promotion.googleTrackingPixel);
-            return newPromo
-        }
+let createCompany = async (companyEmail) => {
+    var formData = {
+        "cif": md5(companyEmail),
+        "email": companyEmail
     };
-    try {
-        let response = await fetch('http://localhost:3000/promotion/', fetchOptions);
-        let data = await response.json();
-        if (response.status !== 200) {
-            return;
-        }
-        return data;
-    } catch (error) {
+    let response = await request.post({ url: 'http://localhost:3000/company/', form: formData });
+    console.log(response);
+    return response;
 
-        console.error('Fetch error. STATUS: ' + response.status);
+}
+
+let getOrCreateCompany = async (companyEmail) => {
+    try {
+        let response = await fetch('http://localhost:3000/company/email/' + companyEmail, { method: 'get' });
+        let company = await response.json();
+
+        if (response.status == 404) {
+            console.log("Trying to create a company.");
+            let company = await createCompany(companyEmail);
+            return company;
+        } else if (response.status !== 200) {
+            console.log('Company not created.' + response);
+            return;
+        } else {
+            console.log('Company already exists');
+            return company;
+        }
+
+    } catch (error) {
+        console.error('Fetch error. STATUS');
         console.error(error);
     }
+}
+
+let newPromotion = async (promotion) => {
+   
+
+    var formData = {
+        "promoId": promotion.promoId,
+        "promoEnabled": promotion.promoEnabled,
+        "startDate": promotion.startDate,
+        "endDate": promotion.endDate,
+        "promoTitle": promotion.promoTitle,
+        "promoLegalCond": promotion.promoLegalCond,
+        "promoDescription": promotion.promoDescription,
+        "promoContactDetails": promotion.promoContactDetails,
+        "promoImage": promotion.promoImage,
+        "socialImage": promotion.socialImage,
+        "winnersNumber": promotion.winnersNumber,
+        "showLocalization": promotion.showLocalization,
+        "lat": promotion.lat,
+        "lng": promotion.lng,
+        "postalCode": promotion.postalCode,
+        "fullAddress": promotion.fullAddress,
+        "companyId": promotion.companyId,
+        "trollNumber": promotion.trollNumber,
+        "shareMessages": promotion.shareMessages,
+        "facebookTrackingPixel": promotion.facebookTrackingPixel,
+        "googleTrackingPixel": promotion.googleTrackingPixel
+    };
+
+
+    let response = await request.post({ url: 'http://localhost:3000/promotion/', form: formData });
+    console.log(response);
+    return response;
 };
 
 
@@ -100,58 +103,107 @@ module.exports = {
         var promoId = req.params.promoId;
         var refFriend = req.params.refFriend;
 
-let promotions = await getPromotionsByCompanyId('58e3a7ec4b05fd09d0a2db2a');
+        let companyEmail = req.cookies.companyEmail;
+        console.log(companyEmail);
 
-        let md = new mobileDetect(req.headers['user-agent']);
-        if (md.is('bot')) {
-            console.log('bot access');
-        } else if (md.mobile() != null) {
-            console.log('phone access');
-        } else if (md.is('desktopmode')) {
-            console.log('desktopmode access');
-        } else {
-            console.log('other device access');
+        //Create company if not exists
+        try {
+            if (companyEmail) {
+                // Promise.all(iterable)
+                let company = await getOrCreateCompany(companyEmail);
+                if (!company) { console.log('Company not found'); }
+
+                let promotions = await getPromotionsByCompanyId(company._id);
+
+                let md = new mobileDetect(req.headers['user-agent']);
+                if (md.is('bot')) {
+                    console.log('bot access');
+                } else if (md.mobile() != null) {
+                    console.log('phone access');
+                } else if (md.is('desktopmode')) {
+                    console.log('desktopmode access');
+                } else {
+                    console.log('other device access');
+                }
+
+
+                let options = {
+                    maxAge: 1000 * 60 * 15, // would expire after 15 minutes
+                    httpOnly: true, // The cookie only accessible by the web server
+                    signed: false // Indicates if the cookie should be signed
+                }
+
+                // Set cookie
+                res.cookie('companyId', company._id, options) // options is optional
+
+
+
+                //Desktop view
+                res.render('desktop-version', { title: 'No title', promotions: promotions });
+
+
+            }
+        } catch (error) {
+            console.log(error);
         }
-
-        //Desktop view
-        res.render('desktop-version', { title: 'No title', promotions:promotions });
     },
 
 
 
-/**
-     * mainController.promotionIdAvailable()
-     */
+    /**
+         * mainController.promotionIdAvailable()
+         */
     promotionIdAvailable: async function (req, res) {
         var promoId = req.params.promoId;
-       
-    try {
-        let response = await fetch('http://localhost:3000/promotion/available/'+promoId, {method:'GET'});
-        let data = await response.json();
-        if (response.status !== 200) {
-             return res.status(500).json({response:response});
+
+        try {
+            let response = await fetch('http://localhost:3000/promotion/available/' + promoId, { method: 'GET' });
+            let data = await response.json();
+            if (response.status !== 200) {
+                return res.status(500).json({ response: response });
+            }
+            return res.status(200).json(data);
+
+        } catch (error) {
+            console.error('Fetch error. ');
+            console.error(error);
+            return res.status(500).json({
+                error: error
+            });
         }
-        return  res.status(200).json(data);
 
-    } catch (error) {
-
-        console.error('Fetch error. STATUS: ' + response.status);
-        console.error(error);
-        return res.status(500).json({
-            error: error
-        });
-    }
-        
     },
 
-/**
-     * mainController.getPromotions()
-     */
+
+    /**
+         * mainController.promotionIdAvailable()
+         */
+    showPromotion: async function (req, res) {
+        var promoId = req.params.promoId;
+
+        try {
+            let response = await fetch('http://localhost:3000/promotion/' + promoId, { method: 'GET' });
+            let data = await response.json();
+            if (response.status !== 200) {
+                return res.status(500).json({ response: response });
+            }
+            return res.status(200).json(data);
+
+        } catch (error) {
+            console.error('Fetch error. ');
+            console.error(error);
+            return res.status(500).json({
+                error: error
+            });
+        }
+
+    },
+    /**
+         * mainController.getPromotions()
+         */
     getPromotions: async function (req, res) {
-      let companyId = req.cookies.companyId;
-       
-    return await getPromotionsByCompanyId(companyId);
-        
+        let companyId = req.cookies.companyId;
+        return await getPromotionsByCompanyId(companyId);
     },
 
 
@@ -167,15 +219,15 @@ let promotions = await getPromotionsByCompanyId('58e3a7ec4b05fd09d0a2db2a');
         promotion.promoLegalCond = req.body.promoLegalCond;
         promotion.promoDescription = req.body.promoDescription;
         promotion.promoContactDetails = req.body.promoContactDetails;
-        promotion.promoImage = req.body.promoImage;
-        promotion.socialImage = req.body.socialImage;
+        promotion.promoImage = "generated url";
+        promotion.socialImage = "generated url";
         promotion.winnersNumber = req.body.winnersNumber;
         promotion.showLocalization = req.body.showLocalization;
         promotion.lat = req.body.lat;
         promotion.lng = req.body.lng;
         promotion.postalCode = req.body.postalCode;
         promotion.fullAddress = req.body.fullAddress;
-        promotion.companyId = req.body.companyId;
+        promotion.companyId = req.cookies.companyId;
         promotion.trollNumber = req.body.trollNumber;
         promotion.shareMessages = req.body.shareMessages;
         promotion.facebookTrackingPixel = req.body.facebookTrackingPixel;

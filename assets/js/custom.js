@@ -1,4 +1,6 @@
 
+
+
 $('.button.sendPromo').on('click', function (e) {
   var form = $("form.promotionForm");
 
@@ -21,7 +23,7 @@ $('.button.sendPromo').on('click', function (e) {
 
 function cleanFormData() {
   $('form.promotionForm')[0].reset();
-  $('.summernote').each(function (i, e) { e.summernote("reset") });
+  $('.summernote').each(function (i, e) { $(e).summernote("reset") });
 }
 
 /*Check if user adds webapp to HomeScreen*/
@@ -192,6 +194,69 @@ function markerDragHandler() {
 
 $(document).ready(function () {
 
+
+function renderPromotion(promoId) {
+  
+   jQuery.ajax({
+      type: 'GET',
+      url: '//' + window.location.host + '/api/promotion/' + promoId,
+      dataType: 'json',
+      success: function (promotion) {
+
+      $( "textarea[name='promoTitle']" ).val(promotion.promoTitle);
+
+      $( ".promo-image-popup img").attr("src", promotion.promoImage);
+
+      $("textarea[name='promoDescription']").summernote('code', promotion.promoDescription);
+      $("textarea[name='promoLegalCond']").summernote('code', promotion.promoLegalCond);
+
+      $( "input[name='showLocalization']" ).val(promotion.showLocalization);
+      $( "input[name='lat']" ).val(promotion.lat);
+      $( "input[name='lng']" ).val(promotion.lng);
+      $( "input[name='postalCode']" ).val(promotion.postalCode);
+      $( "input[name='fullAddress']" ).val(promotion.fullAddress);
+
+      $("textarea[name='promoContactDetails']").summernote('code', promotion.promoContactDetails);
+
+      $( "input[name='promoId']" ).val(promotion.promoId);
+
+      $( ".social-image-popup img").attr("src", promotion.socialImage);
+
+      $('#rangestart').calendar('set date', new Date(promotion.startDate), true, false);
+      $('#rangeend').calendar('set date', new Date(promotion.endDate), true, false);
+
+      $( "input[name='winnersNumber']" ).val(promotion.winnersNumber);
+      $( "input[name='itemMeanPrice']" ).val(promotion.itemMeanPrice);
+
+      $( "input[name='facebookTrackingPixel']" ).val(promotion.facebookTrackingPixel);
+      $( "input[name='googleTrackingPixel']" ).val(promotion.googleTrackingPixel);
+
+      },
+      error: function (error) {
+        console.error(error);
+      }
+    });
+}
+
+
+  $('.modifyPromo').click(function () {
+    
+    var id = $(this).data('id');
+
+    renderPromotion(id);
+
+  });
+
+
+//Create promotion button
+$('.add-promo').on('click', function(){
+  cleanFormData();
+  showEditPromo();
+
+ //Set today at calendar
+  $('#rangestart').calendar('set date', new Date(), true, false);
+ $('#rangeend').calendar('set date', new Date(), true, false);
+})
 
 
   /*Particiapants table (with DataTable)*/
@@ -627,7 +692,12 @@ $('.form-navigate .next').hide();
       position: 'right center'
     });
 
-
+  $('.file1-label')
+    .popup({
+      popup: '.promo-image-popup',
+      lastResort: true,
+      position: 'right center'
+    });
 
 
   /*Textarea Editor*/
