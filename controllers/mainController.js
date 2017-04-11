@@ -90,6 +90,38 @@ let newPromotion = async (promotion) => {
 };
 
 
+let updatePromotion = async (promotion) => {
+
+    var formData = {
+        "promoId": promotion.promoId,
+        "promoEnabled": promotion.promoEnabled,
+        "startDate": promotion.startDate,
+        "endDate": promotion.endDate,
+        "promoTitle": promotion.promoTitle,
+        "promoLegalCond": promotion.promoLegalCond,
+        "promoDescription": promotion.promoDescription,
+        "promoContactDetails": promotion.promoContactDetails,
+        "promoImage": promotion.promoImage,
+        "socialImage": promotion.socialImage,
+        "winnersNumber": promotion.winnersNumber,
+        "showLocalization": promotion.showLocalization,
+        "lat": promotion.lat,
+        "lng": promotion.lng,
+        "postalCode": promotion.postalCode,
+        "fullAddress": promotion.fullAddress,
+        "companyId": promotion.companyId,
+        "trollNumber": promotion.trollNumber,
+        "shareMessages": promotion.shareMessages,
+        "facebookTrackingPixel": promotion.facebookTrackingPixel,
+        "googleTrackingPixel": promotion.googleTrackingPixel
+    };
+
+    let response = await request.put({ url: 'http://localhost:3000/promotion/'+promotion.updatePromotionId, form: formData });
+    console.log(response);
+    return response;
+};
+
+
 /**
  * mainController.js
  *
@@ -206,11 +238,9 @@ module.exports = {
         return await getPromotionsByCompanyId(companyId);
     },
 
-
-    createPromotion: async function (req, res) {
+    createUpdatePromotion: async function (req, res) {
 
         let promotion = {};
-
         promotion.promoId = req.body.promoId;
         promotion.promoEnabled = req.body.promoEnabled;
         promotion.startDate = req.body.startDate;
@@ -233,8 +263,14 @@ module.exports = {
         promotion.facebookTrackingPixel = req.body.facebookTrackingPixel;
         promotion.googleTrackingPixel = req.body.googleTrackingPixel;
 
-        let newPromo = await newPromotion(promotion);
-
+        if(req.body.updatePromotionId){
+            promotion.updatePromotionId = req.body.updatePromotionId;
+            let updatedPromo = await updatePromotion(promotion);
+            console.log('updated promotion: '+ updatedPromo)
+        }else{
+             let newPromo = await newPromotion(promotion);
+            console.log('created promotion: '+ newPromo)
+        }
 
     }
 

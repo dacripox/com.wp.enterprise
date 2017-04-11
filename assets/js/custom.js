@@ -195,13 +195,15 @@ function markerDragHandler() {
 $(document).ready(function () {
 
 
-function renderPromotion(promoId) {
-  
+function modifyPromotion(promo_id) {
+ 
    jQuery.ajax({
       type: 'GET',
-      url: '//' + window.location.host + '/api/promotion/' + promoId,
+      url: '//' + window.location.host + '/api/promotion/' + promo_id,
       dataType: 'json',
       success: function (promotion) {
+
+       $( "input[name='updatePromotionId']" ).val(promo_id);
 
       $( "textarea[name='promoTitle']" ).val(promotion.promoTitle);
 
@@ -217,8 +219,9 @@ function renderPromotion(promoId) {
       $( "input[name='fullAddress']" ).val(promotion.fullAddress);
 
       $("textarea[name='promoContactDetails']").summernote('code', promotion.promoContactDetails);
-
-      $( "input[name='promoId']" ).val(promotion.promoId);
+ 
+      $( "input[name='promoId']" ).val(promotion.promoId);  //promotion URL
+       $( "input[name='promoId']" ).prop( "disabled", true );  //promotion URL
 
       $( ".social-image-popup img").attr("src", promotion.socialImage);
 
@@ -242,9 +245,9 @@ function renderPromotion(promoId) {
   $('.modifyPromo').click(function () {
     
     var id = $(this).data('id');
-
-    renderPromotion(id);
-
+    console.log('modifyPromo: '+ id);
+    modifyPromotion(id);
+    showEditPromo();
   });
 
 
@@ -252,7 +255,7 @@ function renderPromotion(promoId) {
 $('.add-promo').on('click', function(){
   cleanFormData();
   showEditPromo();
-
+$( "input[name='promoId']" ).prop( "disabled", false );  //promotion URL
  //Set today at calendar
   $('#rangestart').calendar('set date', new Date(), true, false);
  $('#rangeend').calendar('set date', new Date(), true, false);

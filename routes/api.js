@@ -8,14 +8,14 @@ var router = express.Router();
  * GET
  */
 
-router.get('/promotion/', mainController.showPromotion);
+router.get('/promotion/:promoId', mainController.showPromotion);
 
 
 /*
  * POST
  */
 
-router.post('/promotion/', mainController.createPromotion);
+router.post('/promotion/', mainController.createUpdatePromotion);
 
 
 /*
