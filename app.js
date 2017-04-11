@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
 
 var hbs = require('express-hbs');
 // Use `.hbs` for extensions and find partials in `views/partials`.
@@ -48,6 +50,7 @@ hbs.registerHelper("not", function(obj) {
 
 app.use('/assets',express.static(path.join(__dirname, 'assets')));
 app.use('/vendor',express.static(path.join(__dirname, 'vendor')));
+app.use('/public',express.static(path.join(__dirname, 'public')));
 app.use('/', mainRoutes);
 app.use('/promociones', mainRoutes);
 app.use('/editar-promocion', mainRoutes);

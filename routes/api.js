@@ -33,4 +33,14 @@ router.get('/available/:promoId', mainController.promotionIdAvailable);
 router.get('/promotions', mainController.getPromotions);
 
 
+/*
+ * POST
+ */
+router.post('/upload-image/promo', mainController.loadPromoImage);
+
+/*
+ * POST
+ */
+router.post('/upload-image/social', mainController.loadSocialImage);
+
 module.exports = router;

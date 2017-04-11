@@ -1,0 +1,104 @@
+<div class="ui form">
+    <div class="field">
+        <label> <i class="share alternate icon"></i>Enlace único de la promoción</label>
+
+        <div class="ui labeled input">
+            <div class="ui label">
+                whatspromo.com/
+            </div>
+            <div class="ui pointing  red basic label url-check-alert" style="display:none;">
+                El nombre del enlace ya está en uso para otra promoción.
+            </div>
+            <input type="text" id="url-check" name="promoId" placeholder="invierno2020">
+
+        </div>
+
+    </div>
+
+
+    <div class="field">
+        <label class="file2-label" for="file2">Imagen en las redes sociales</label>
+        <div class="ui flowing popup top left transition hidden social-image-popup">
+            <img src="" alt="">
+        </div>
+        <div class="ui fluid file input action left icon">
+            <i class="file image outline icon"></i>
+            <input type="text" readonly>
+            <input type="file" id="file2" name="socialImage" accept="image/x-png,image/jpeg" autocomplete="off">
+            <div class="ui button">
+                Seleccionar...
+            </div>
+        </div>
+    </div>
+
+    <div class="two fields">
+        <div class="field">
+            <label>Fecha de inicio</label>
+            <div class="ui calendar" id="rangestart">
+                <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" placeholder="Inicio" autocomplete="off">
+
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Fecha de finalización</label>
+            <div class="ui calendar" id="rangeend">
+                <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" placeholder="Fín" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <input type="text" class="startDateHidden" name="startDate" placeholder="Inicio" autocomplete="off" style="display: none;">
+        <input type="text" class="endDateHidden" name="endDate" placeholder="Fín" autocomplete="off" style="display: none;">
+    </div>
+
+
+    <div class="two fields">
+        <div class="field">
+            <label for="winners-number">Número de ganadores</label>
+            <div class="ui spinner input">
+                <input type="text" id="winners-number" name="winnersNumber" placeholder="1" value="1" />
+                <div class="ui vertical buttons">
+                    <button type="button" class="ui spinner up icon button"><i class="chevron up icon"></i></button>
+                    <button type="button" class="ui spinner down icon button"><i class="chevron down icon"></i></button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="field">
+            <label for="">Valor medio premio (unidad)</label>
+            <div class="ui right labeled spinner input">
+                <input type="text" name="itemMeanPrice" placeholder="10">
+                <div class="ui basic label">
+                    €
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="field basic-membership">
+        <label for="">Facebook Pixel ID</label>
+        <div class="ui input">
+            <input type="text" name="facebookTrackingPixel" placeholder="1010101010">
+
+        </div>
+    </div>
+    <div class="field basic-membership">
+        <label for="">Google Tracking ID</label>
+        <div class="ui input">
+            <input type="text" name="googleTrackingPixel" placeholder="1010101010">
+
+        </div>
+    </div>
+
+    <div class="field">
+        <div class="ui checkbox">
+            <input type="checkbox" name="acceptConditions" tabindex="0" class="hidden">
+            <label>Estoy de acuerdo cun los términos y condiciones para crear/modificar la promoción</label>
+        </div>
+    </div>
+
+</div>

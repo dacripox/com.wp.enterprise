@@ -1,5 +1,7 @@
 <!-- ITEM - Create/Modify promotion-->
 <div class="ui segment edit-promo" style="display:none;">
+    {{!--
+
     <!--Top Warning message-->
     <div class="ui warning message">
         <div class="header">La promoción no se puede editar mientras está activa</div>
@@ -7,24 +9,23 @@
             <li>That e-mail has been subscribed, but you have not yet clicked the verification link in your e-mail.</li>
         </ul>
     </div>
+
+    --}}
+
     <!--Promotion edit content container-->
     <div class="ui middle aligned stackable grid container">
         <!--Form container-->
         <div class="eight wide column">
 
-            <div class="ui two top mini attached steps">
+            <div class="ui two top ordered mini attached steps">
                 <div class="step">
-                    <i class="star icon"></i>
                     <div class="content">
-                        <div class="title">Contenido 1/2</div>
-                        <div class="description">Información de la promoción</div>
+                        <div class="title">Información de la promoción</div>
                     </div>
                 </div>
                 <div class="active step">
-                    <i class="star icon"></i>
                     <div class="content">
-                        <div class="title">Contenido 2/2</div>
-                        <div class="description">Otros detalles y configuración</div>
+                        <div class="title">Otros detalles y configuración</div>
                     </div>
                 </div>
             </div>
@@ -32,192 +33,15 @@
             <div class="ui attached segment">
                 <form class="promotionForm" action="">
 
-                
-                <div class="first-form">
-
-                    <div class="ui form">
-
-                        <input type="text"  name="updatePromotionId" autocomplete="off" style="diaplay:none;">
-                    
-                        <div class="field">
-                            <label>Título de la promoción (máx. 140 carácteres)</label>
-                            <!--  <input type="text" name="" placeholder="Sorteo de entradas para la nieve..."> -->
-                            <textarea rows="2" class="promo-title" name="promoTitle" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
-                            <div id="textarea_feedback">140 caracteres restantes</div>
-                        </div>
-
-
-                        <div class="field">
-                            <label class="file1-label" for="file1">Imagen de la promoción (960x768 - ratio 5:4)</label>
-                            <div class="ui flowing popup top left transition hidden promo-image-popup">
-                                <img src="" alt="">
-                            </div>
-                            <div class="ui fluid file input action left icon">
-                                <i class="file image outline icon"></i>
-                                <input type="text" readonly>
-                                <input type="file" id="file1" name="promoImage" accept="image/x-png,image/jpeg" autocomplete="off">
-                                <div class="ui button">
-                                    Seleccionar...
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="field">
-                            <label>Descripción de la promoción</label>
-                            <textarea rows="2" name="promoDescription" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
-                        </div>
-
-                        <div class="field">
-                            <label>Condiciones de la promoción</label>
-                            <textarea rows="2" name="promoLegalCond" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
-                        </div>
-
-                        <div class="field map">
-                            <label>Localización de la promoción (puede ser la de la empresa)</label>
-                            <input id="pac-input" class="controls" type="text" placeholder="Buscar localización">
-                            <div id="map"></div>
-
-                        </div>
-                        <div class="field">
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="showLocalization" tabindex="0" checked="checked" class="hidden">
-                                <label>Mostrar localización en la promoción.</label>
-                            </div>
-                        </div>
-                        <input id="lat" name="lat" type="text" style="display:none">
-                        <input id="lng" name="lng" type="text" style="display:none">
-                        <input id="postCode" name="postalCode" type="text" style="display:none">
-                        <input id="address" name="fullAddress" type="text" style="display:none">
-
-
-
-
-                        <div class="field">
-                            <label>Contacto de la promoción</label>
-                            <textarea rows="2" name="promoContactDetails" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
-                        </div>
-
-
+                    <div class="first-form">
+                        {{>first-step-form}}
                     </div>
 
-                </div>
 
-
-                <div class="second-form" style="display:none">
-                    <div class="ui form">
-                        <div class="field">
-                            <label> <i class="share alternate icon"></i>Enlace único de la promoción</label>
-
-                            <div class="ui labeled input">
-                                <div class="ui label">
-                                    whatspromo.com/
-                                </div>
-                                <div class="ui pointing  red basic label url-check-alert" style="display:none;">
-                                    El nombre del enlace ya está en uso para otra promoción.
-                                </div>
-                                <input type="text" id="url-check" name="promoId" placeholder="invierno2020">
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="field">
-                            <label class="file2-label" for="file2">Imagen en las redes sociales</label>
-                            <div class="ui flowing popup top left transition hidden social-image-popup">
-                                <img src="" alt="">
-                            </div>
-                            <div class="ui fluid file input action left icon">
-                                <i class="file image outline icon"></i>
-                                <input type="text" readonly>
-                                <input type="file" id="file2" name="socialImage" accept="image/x-png,image/jpeg"  autocomplete="off">
-                                <div class="ui button">
-                                    Seleccionar...
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="two fields">
-                            <div class="field">
-                                <label>Fecha de inicio</label>
-                                <div class="ui calendar" id="rangestart">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text"  placeholder="Inicio" autocomplete="off">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label>Fecha de finalización</label>
-                                <div class="ui calendar" id="rangeend">
-                                    <div class="ui input left icon">
-                                        <i class="calendar icon"></i>
-                                        <input type="text" placeholder="Fín" autocomplete="off">
-                                    </div>
-                                </div>
-                            </div>
-                                        <input type="text" class="startDateHidden" name="startDate" placeholder="Inicio" autocomplete="off" style="display: none;">
-                                        <input type="text" class="endDateHidden" name="endDate" placeholder="Fín" autocomplete="off" style="display: none;">
-                        </div>
-
-
-                        <div class="two fields">
-                            <div class="field">
-                                <label for="winners-number">Número de ganadores</label>
-                                <div class="ui spinner input">
-                                    <input type="text" id="winners-number" name="winnersNumber" placeholder="1" value="1" />
-                                    <div class="ui vertical buttons">
-                                        <button type="button" class="ui spinner up icon button">
-            <i class="chevron up icon"></i>
-           </button>
-                                        <button type="button" class="ui spinner down icon button">
-            <i class="chevron down icon"></i>
-           </button>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="field">
-                                <label for="">Valor medio premio (unidad)</label>
-                                <div class="ui right labeled spinner input">
-                                    <input type="text" name="itemMeanPrice" placeholder="10">
-                                    <div class="ui basic label">
-                                        €
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field basic-membership">
-                            <label for="">Facebook Pixel ID</label>
-                            <div class="ui input">
-                                <input type="text" name="facebookTrackingPixel" placeholder="1010101010">
-
-                            </div>
-                        </div>
-                        <div class="field basic-membership">
-                            <label for="">Google Tracking ID</label>
-                            <div class="ui input">
-                                <input type="text" name="googleTrackingPixel" placeholder="1010101010">
-
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="acceptConditions" tabindex="0" class="hidden">
-                                <label>Estoy de acuerdo cun los términos y condiciones para crear/modificar la promoción</label>
-                            </div>
-                        </div>
-                       
-
-</form> 
+                    <div class="second-form" style="display:none">
+                        {{>second-step-form}}
                     </div>
-                </div>
-
-
+                </form>
                 <br>
                 <!--Form navigate buttons-->
                 <div class="ui column centered grid form-navigate">
@@ -225,12 +49,13 @@
 
                         <button class="ui button disabled back"><i class="left chevron icon"></i>Atrás</button>
                         <button class="ui button next">Siguiente<i class="right chevron icon"></i></button>
-                         <button class="ui button sendPromo" style="display: none;"> <i class="announcement icon"></i>Crear/Guardar promoción</button>
+                        <button class="ui button sendPromo" disabled style="display: none;"> <i class="announcement icon"></i>Crear/Guardar promoción</button>
                     </div>
                 </div>
-
             </div>
         </div>
+
+
         <!--end form container-->
 
         <!--Mobile previsualization -->

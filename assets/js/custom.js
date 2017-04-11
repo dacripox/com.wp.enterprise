@@ -1,4 +1,74 @@
+$("input[name='socialImage']").change(function () {
+  console.log('Promo image choosed');
 
+  var objFormData = new FormData();
+  // GET FILE OBJECT 
+  var objFile = $(this)[0].files[0];
+  // APPEND FILE TO POST DATA
+  objFormData.append('userfile', objFile);
+  $.ajax({
+    url: '/api/upload-image/social',
+    type: 'POST',
+    contentType: false,
+    data: objFormData,
+    //JQUERY CONVERT THE FILES ARRAYS INTO STRINGS.SO processData:false
+    processData: false,
+    success: function (image) {
+
+      console.log('Promo image success uploaded');
+      console.log('URL:' + image);
+      // $( ".promo-image-popup img").attr("src", image.url);
+
+      $(".promo-image-popup img").remove();
+      var myImage = new Image();
+      myImage.src = image.url;
+
+      $(".promo-image-popup").append(myImage);
+
+    }
+  });
+});
+
+$("input[name='promoImage']").change(function () {
+  console.log('Social image choosed');
+
+   var objFormData = new FormData();
+  // GET FILE OBJECT 
+  var objFile = $(this)[0].files[0];
+  // APPEND FILE TO POST DATA
+  objFormData.append('userfile', objFile);
+  $.ajax({
+    url: '/api/upload-image/promo',
+    type: 'POST',
+    contentType: false,
+    data: objFormData,
+    //JQUERY CONVERT THE FILES ARRAYS INTO STRINGS.SO processData:false
+    processData: false,
+    success: function (image) {
+
+      console.log('Promo image success uploaded');
+      console.log('URL:' + image);
+      // $( ".promo-image-popup img").attr("src", image.url);
+
+      $(".promo-image-popup img").remove();
+      var myImage = new Image();
+      myImage.src = image.url;
+
+      $(".promo-image-popup").append(myImage);
+
+    }
+  });
+});
+
+$("input[name='acceptConditions']").change(function () {
+  console.log('Consitions check toogled');
+  if ($(this).is(':checked')) {
+    $(".sendPromo").prop("disabled", false);  // checked
+  } else {
+    $(".sendPromo").prop("disabled", true);  // unchecked
+  }
+
+});
 
 
 $('.button.sendPromo').on('click', function (e) {
@@ -195,71 +265,71 @@ function markerDragHandler() {
 $(document).ready(function () {
 
 
-function modifyPromotion(promo_id) {
- 
-   jQuery.ajax({
+  function modifyPromotion(promo_id) {
+
+    jQuery.ajax({
       type: 'GET',
       url: '//' + window.location.host + '/api/promotion/' + promo_id,
       dataType: 'json',
       success: function (promotion) {
 
-       $( "input[name='updatePromotionId']" ).val(promo_id);
+        $("input[name='updatePromotionId']").val(promo_id);
 
-      $( "textarea[name='promoTitle']" ).val(promotion.promoTitle);
+        $("textarea[name='promoTitle']").val(promotion.promoTitle);
 
-      $( ".promo-image-popup img").attr("src", promotion.promoImage);
+        $(".promo-image-popup img").attr("src", promotion.promoImage);
 
-      $("textarea[name='promoDescription']").summernote('code', promotion.promoDescription);
-      $("textarea[name='promoLegalCond']").summernote('code', promotion.promoLegalCond);
+        $("textarea[name='promoDescription']").summernote('code', promotion.promoDescription);
+        $("textarea[name='promoLegalCond']").summernote('code', promotion.promoLegalCond);
 
-      $( "input[name='showLocalization']" ).val(promotion.showLocalization);
-      $( "input[name='lat']" ).val(promotion.lat);
-      $( "input[name='lng']" ).val(promotion.lng);
-      $( "input[name='postalCode']" ).val(promotion.postalCode);
-      $( "input[name='fullAddress']" ).val(promotion.fullAddress);
+        $("input[name='showLocalization']").val(promotion.showLocalization);
+        $("input[name='lat']").val(promotion.lat);
+        $("input[name='lng']").val(promotion.lng);
+        $("input[name='postalCode']").val(promotion.postalCode);
+        $("input[name='fullAddress']").val(promotion.fullAddress);
 
-      $("textarea[name='promoContactDetails']").summernote('code', promotion.promoContactDetails);
- 
-      $( "input[name='promoId']" ).val(promotion.promoId);  //promotion URL
-       $( "input[name='promoId']" ).prop( "disabled", true );  //promotion URL
+        $("textarea[name='promoContactDetails']").summernote('code', promotion.promoContactDetails);
 
-      $( ".social-image-popup img").attr("src", promotion.socialImage);
+        $("input[name='promoId']").val(promotion.promoId);  //promotion URL
+        $("input[name='promoId']").prop("disabled", true);  //promotion URL
 
-      $('#rangestart').calendar('set date', new Date(promotion.startDate), true, false);
-      $('#rangeend').calendar('set date', new Date(promotion.endDate), true, false);
+        $(".social-image-popup img").attr("src", promotion.socialImage);
 
-      $( "input[name='winnersNumber']" ).val(promotion.winnersNumber);
-      $( "input[name='itemMeanPrice']" ).val(promotion.itemMeanPrice);
+        $('#rangestart').calendar('set date', new Date(promotion.startDate), true, false);
+        $('#rangeend').calendar('set date', new Date(promotion.endDate), true, false);
 
-      $( "input[name='facebookTrackingPixel']" ).val(promotion.facebookTrackingPixel);
-      $( "input[name='googleTrackingPixel']" ).val(promotion.googleTrackingPixel);
+        $("input[name='winnersNumber']").val(promotion.winnersNumber);
+        $("input[name='itemMeanPrice']").val(promotion.itemMeanPrice);
+
+        $("input[name='facebookTrackingPixel']").val(promotion.facebookTrackingPixel);
+        $("input[name='googleTrackingPixel']").val(promotion.googleTrackingPixel);
 
       },
       error: function (error) {
         console.error(error);
       }
     });
-}
+  }
 
 
   $('.modifyPromo').click(function () {
-    
+
     var id = $(this).data('id');
-    console.log('modifyPromo: '+ id);
+    console.log('modifyPromo: ' + id);
     modifyPromotion(id);
     showEditPromo();
   });
 
 
-//Create promotion button
-$('.add-promo').on('click', function(){
-  cleanFormData();
-  showEditPromo();
-$( "input[name='promoId']" ).prop( "disabled", false );  //promotion URL
- //Set today at calendar
-  $('#rangestart').calendar('set date', new Date(), true, false);
- $('#rangeend').calendar('set date', new Date(), true, false);
-})
+  //Create promotion button
+  $('.add-promo').on('click', function () {
+    cleanFormData();
+    showEditPromo();
+    $("input[name='promoId']").prop("disabled", false);  //promotion URL
+    //Set today at calendar
+    $('#rangestart').calendar('set date', new Date(), true, false);
+    $('#rangeend').calendar('set date', new Date(), true, false);
+  })
 
 
   /*Particiapants table (with DataTable)*/
@@ -350,8 +420,8 @@ $( "input[name='promoId']" ).prop( "disabled", false );  //promotion URL
       $('.first-form').hide();
 
       //Show submit button
-$('.sendPromo').show();
-$('.form-navigate .next').hide();
+      $('.sendPromo').show();
+      $('.form-navigate .next').hide();
       formState = 1;
     }
   });

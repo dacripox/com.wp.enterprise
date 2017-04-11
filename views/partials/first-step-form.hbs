@@ -1,0 +1,65 @@
+<div class="ui form">
+
+    <input type="text" name="updatePromotionId" autocomplete="off" style="display:none;">
+
+    <div class="field">
+        <label>Título de la promoción (máx. 140 carácteres)</label>
+        <!--  <input type="text" name="" placeholder="Sorteo de entradas para la nieve..."> -->
+        <textarea rows="2" class="promo-title" name="promoTitle" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
+        <div id="textarea_feedback">140 caracteres restantes</div>
+    </div>
+
+
+    <div class="field">
+        <label class="file1-label" for="file1">Imagen de la promoción (960x768 - ratio 5:4)</label>
+        <div class="ui flowing popup top left transition hidden promo-image-popup">
+            <img src="" alt="">
+        </div>
+        <div class="ui fluid file input action left icon">
+            <i class="file image outline icon"></i>
+            <input type="text" readonly>
+            <input type="file" id="file1" name="promoImage" accept="image/x-png,image/jpeg" autocomplete="off">
+            <div class="ui button">
+                Seleccionar...
+            </div>
+        </div>
+    </div>
+
+
+    <div class="field">
+        <label>Descripción de la promoción</label>
+        <textarea rows="2" name="promoDescription" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
+    </div>
+
+    <div class="field">
+        <label>Condiciones de la promoción</label>
+        <textarea rows="2" name="promoLegalCond" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
+    </div>
+
+    <div class="field map">
+        <label>Localización de la promoción (puede ser la de la empresa)</label>
+        <input id="pac-input" class="controls" type="text" placeholder="Buscar localización">
+        <div id="map"></div>
+
+    </div>
+    <div class="field">
+        <div class="ui checkbox">
+            <input type="checkbox" name="showLocalization" tabindex="0" checked="checked" class="hidden">
+            <label>Mostrar localización en la promoción.</label>
+        </div>
+    </div>
+    <input id="lat" name="lat" type="text" style="display:none">
+    <input id="lng" name="lng" type="text" style="display:none">
+    <input id="postCode" name="postalCode" type="text" style="display:none">
+    <input id="address" name="fullAddress" type="text" style="display:none">
+
+
+
+
+    <div class="field">
+        <label>Contacto de la promoción</label>
+        <textarea rows="2" name="promoContactDetails" class="summernote" style="margin-top: 0px; margin-bottom: 0px; height: 58px;"></textarea>
+    </div>
+
+
+</div>

@@ -3,6 +3,9 @@ var mobileDetect = require('mobile-detect');
 var md5 = require('md5');
 let request = require('request-promise');
 
+const uuidV4 = require('uuid/v4');
+var Jimp = require("jimp");
+
 
 let getPromotionsByCompanyId = async (companyId) => {
     try {
@@ -57,7 +60,7 @@ let getOrCreateCompany = async (companyEmail) => {
 }
 
 let newPromotion = async (promotion) => {
-   
+
 
     var formData = {
         "promoId": promotion.promoId,
@@ -116,7 +119,7 @@ let updatePromotion = async (promotion) => {
         "googleTrackingPixel": promotion.googleTrackingPixel
     };
 
-    let response = await request.put({ url: 'http://localhost:3000/promotion/'+promotion.updatePromotionId, form: formData });
+    let response = await request.put({ url: 'http://localhost:3000/promotion/' + promotion.updatePromotionId, form: formData });
     console.log(response);
     return response;
 };
@@ -263,14 +266,61 @@ module.exports = {
         promotion.facebookTrackingPixel = req.body.facebookTrackingPixel;
         promotion.googleTrackingPixel = req.body.googleTrackingPixel;
 
-        if(req.body.updatePromotionId){
+        if (req.body.updatePromotionId) {
             promotion.updatePromotionId = req.body.updatePromotionId;
             let updatedPromo = await updatePromotion(promotion);
-            console.log('updated promotion: '+ updatedPromo)
-        }else{
-             let newPromo = await newPromotion(promotion);
-            console.log('created promotion: '+ newPromo)
+            console.log('updated promotion: ' + updatedPromo)
+        } else {
+            let newPromo = await newPromotion(promotion);
+            console.log('created promotion: ' + newPromo)
         }
+
+    },
+
+    loadPromoImage: function (req, res) {
+        if (!req.files)
+            return res.status(400).send('No files were uploaded.');
+        let hostname = req.headers.host;
+        let userImage = req.files.userfile;
+
+        let modulePath = 'public/images/promo/';
+        let imageTitle = 'promo_' + uuidV4();
+        var filePathWithoutExt = modulePath + imageTitle;
+
+        Jimp.read(userImage.data).then(function (img) {
+            let file = filePathWithoutExt + '.jpg';
+            img.scaleToFit(600, 400)
+                .quality(80)   // set JPEG quality
+                .write(file, () => {
+                    return res.status(200).json({ url: hostname + '/' + filePathWithoutExt + '.jpg' });
+                }) // save
+        }).catch(function (err) {
+            console.error(err);
+        });
+
+    },
+
+    loadSocialImage: function (req, res) {
+        if (!req.files)
+            return res.status(400).send('No files were uploaded.');
+        let hostname = req.headers.host;
+        let userImage = req.files.userfile;
+
+        let modulePath = 'public/images/social/';
+        let imageTitle = 'promo_' + uuidV4();
+        var filePathWithoutExt = modulePath + imageTitle;
+
+        Jimp.read(userImage.data).then(function (img) {
+            img.scaleToFit(600, 400)
+                .quality(80)   // set JPEG quality
+                .write(file, () => {
+                    return res.status(200).json({ url: hostname + '/' + filePathWithoutExt + '.jpg' });
+                }) // save
+
+        }).catch(function (err) {
+            console.error(err);
+        });
+
 
     }
 
