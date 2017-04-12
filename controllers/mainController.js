@@ -63,7 +63,9 @@ let newPromotion = async (promotion) => {
 
 
     var formData = {
+        "promoType": promotion.promoType,
         "promoId": promotion.promoId,
+        "priceItemAvg": promotion.priceItemAvg,
         "promoEnabled": promotion.promoEnabled,
         "startDate": promotion.startDate,
         "endDate": promotion.endDate,
@@ -96,7 +98,9 @@ let newPromotion = async (promotion) => {
 let updatePromotion = async (promotion) => {
 
     var formData = {
+        "promoType": promotion.promoType,
         "promoId": promotion.promoId,
+        "priceItemAvg": promotion.priceItemAvg,
         "promoEnabled": promotion.promoEnabled,
         "startDate": promotion.startDate,
         "endDate": promotion.endDate,
@@ -244,6 +248,7 @@ module.exports = {
     createUpdatePromotion: async function (req, res) {
 
         let promotion = {};
+        promotion.promoType = req.cookies.pt; //0=Free,1=Basic,2=Premium 
         promotion.promoId = req.body.promoId;
         promotion.promoEnabled = req.body.promoEnabled;
         promotion.startDate = req.body.startDate;
@@ -252,8 +257,8 @@ module.exports = {
         promotion.promoLegalCond = req.body.promoLegalCond;
         promotion.promoDescription = req.body.promoDescription;
         promotion.promoContactDetails = req.body.promoContactDetails;
-        promotion.promoImage = "generated url";
-        promotion.socialImage = "generated url";
+        promotion.promoImage = req.body.promoImage;
+        promotion.socialImage = req.body.socialImage;
         promotion.winnersNumber = req.body.winnersNumber;
         promotion.showLocalization = req.body.showLocalization;
         promotion.lat = req.body.lat;
@@ -301,27 +306,25 @@ module.exports = {
     },
 
     loadSocialImage: function (req, res) {
-        if (!req.files)
+          if (!req.files)
             return res.status(400).send('No files were uploaded.');
         let hostname = req.headers.host;
         let userImage = req.files.userfile;
 
         let modulePath = 'public/images/social/';
-        let imageTitle = 'promo_' + uuidV4();
+        let imageTitle = 'social_' + uuidV4();
         var filePathWithoutExt = modulePath + imageTitle;
 
         Jimp.read(userImage.data).then(function (img) {
+            let file = filePathWithoutExt + '.jpg';
             img.scaleToFit(600, 400)
                 .quality(80)   // set JPEG quality
                 .write(file, () => {
                     return res.status(200).json({ url: hostname + '/' + filePathWithoutExt + '.jpg' });
                 }) // save
-
         }).catch(function (err) {
             console.error(err);
         });
-
-
     }
 
 }

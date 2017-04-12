@@ -1,4 +1,4 @@
-$("input[name='socialImage']").change(function () {
+$("input[name='socialImageSRC']").change(function () {
   console.log('Promo image choosed');
 
   var objFormData = new FormData();
@@ -29,7 +29,7 @@ $("input[name='socialImage']").change(function () {
   });
 });
 
-$("input[name='promoImage']").change(function () {
+$("input[name='promoImageSRC']").change(function () {
   console.log('Social image choosed');
 
    var objFormData = new FormData();
@@ -53,9 +53,8 @@ $("input[name='promoImage']").change(function () {
       $(".promo-image-popup img").remove();
       var myImage = new Image();
       myImage.src = image.url;
-
+      
       $(".promo-image-popup").append(myImage);
-
     }
   });
 });
@@ -67,12 +66,11 @@ $("input[name='acceptConditions']").change(function () {
   } else {
     $(".sendPromo").prop("disabled", true);  // unchecked
   }
-
 });
-
 
 $('.button.sendPromo').on('click', function (e) {
   var form = $("form.promotionForm");
+
 
   $.ajax({
     type: "POST",

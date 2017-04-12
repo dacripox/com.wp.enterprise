@@ -24,7 +24,7 @@
         <div class="ui fluid file input action left icon">
             <i class="file image outline icon"></i>
             <input type="text" readonly>
-            <input type="file" id="file2" name="socialImage" accept="image/x-png,image/jpeg" autocomplete="off">
+            <input type="file" id="file2" name="socialImageSRC" accept="image/x-png,image/jpeg" autocomplete="off">
             <div class="ui button">
                 Seleccionar...
             </div>
@@ -72,13 +72,15 @@
         <div class="field">
             <label for="">Valor medio premio (unidad)</label>
             <div class="ui right labeled spinner input">
-                <input type="text" name="itemMeanPrice" placeholder="10">
+                <input type="text" name="priceItemAvg" placeholder="10">
                 <div class="ui basic label">
                     €
                 </div>
             </div>
         </div>
     </div>
+
+    {{#if promoType}} {{!--Display only if 1 or 2, hide when 0 (free) --}}
     <div class="field basic-membership">
         <label for="">Facebook Pixel ID</label>
         <div class="ui input">
@@ -94,6 +96,7 @@
         </div>
     </div>
 
+{{/if}}
     <div class="field">
         <div class="ui checkbox">
             <input type="checkbox" name="acceptConditions" tabindex="0" class="hidden">
