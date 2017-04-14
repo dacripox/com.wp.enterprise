@@ -190,8 +190,8 @@ module.exports = {
 
 
     /**
-         * mainController.promotionIdAvailable()
-         */
+     * mainController.promotionIdAvailable()
+     */
     promotionIdAvailable: async function (req, res) {
         var promoId = req.params.promoId;
 
@@ -215,8 +215,8 @@ module.exports = {
 
 
     /**
-         * mainController.promotionIdAvailable()
-         */
+     * mainController.promotionIdAvailable()
+     */
     showPromotion: async function (req, res) {
         var promoId = req.params.promoId;
 
@@ -238,13 +238,15 @@ module.exports = {
 
     },
     /**
-         * mainController.getPromotions()
-         */
+     * mainController.getPromotions()
+     */
     getPromotions: async function (req, res) {
         let companyId = req.cookies.companyId;
         return await getPromotionsByCompanyId(companyId);
     },
-
+    /**
+     * mainController.createUpdatePromotion()
+     */
     createUpdatePromotion: async function (req, res) {
 
         let promotion = {};
@@ -281,7 +283,9 @@ module.exports = {
         }
 
     },
-
+    /**
+     * mainController.loadPromoImage()
+     */
     loadPromoImage: function (req, res) {
         if (!req.files)
             return res.status(400).send('No files were uploaded.');
@@ -304,9 +308,11 @@ module.exports = {
         });
 
     },
-
+    /**
+         * mainController.loadSocialImage()
+         */
     loadSocialImage: function (req, res) {
-          if (!req.files)
+        if (!req.files)
             return res.status(400).send('No files were uploaded.');
         let hostname = req.headers.host;
         let userImage = req.files.userfile;
