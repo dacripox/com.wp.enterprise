@@ -96,8 +96,8 @@ app.use('/auth/stats', auth, stats);
 */
 
 
-app.listen(3002, function () {
-  console.log('WhatsPromo Enterprise listening on port 3002!');
+app.listen(process.env.PORT || 3002, function () {
+  console.log('WhatsPromo Enterprise listening on port '+process.env.PORT || 3002+'!');
 
   console.log(",--.   ,--.,--.               ,--.         ,------.                                 ");
   console.log("|  |   |  ||  ,---.  ,--,--.,-'  '-. ,---. |  .--. ',--.--. ,---. ,--,--,--. ,---.  ");
