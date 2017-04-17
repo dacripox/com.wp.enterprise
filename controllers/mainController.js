@@ -151,36 +151,37 @@ module.exports = {
                 // Promise.all(iterable)
                 let company = await getOrCreateCompany(companyEmail);
                 if (!company) { console.log('Company not found'); }
+                else {
 
-                let promotions = await getPromotionsByCompanyId(company._id);
+                    let promotions = await getPromotionsByCompanyId(company._id);
 
-                let md = new mobileDetect(req.headers['user-agent']);
-                if (md.is('bot')) {
-                    console.log('bot access');
-                } else if (md.mobile() != null) {
-                    console.log('phone access');
-                } else if (md.is('desktopmode')) {
-                    console.log('desktopmode access');
-                } else {
-                    console.log('other device access');
+
+                    let md = new mobileDetect(req.headers['user-agent']);
+                    if (md.is('bot')) {
+                        console.log('bot access');
+                    } else if (md.mobile() != null) {
+                        console.log('phone access');
+                    } else if (md.is('desktopmode')) {
+                        console.log('desktopmode access');
+                    } else {
+                        console.log('other device access');
+                    }
+
+
+                    let options = {
+                        maxAge: 1000 * 60 * 15, // would expire after 15 minutes
+                        httpOnly: true, // The cookie only accessible by the web server
+                        signed: false // Indicates if the cookie should be signed
+                    }
+
+                    // Set cookie
+                    res.cookie('companyId', company._id, options) // options is optional
+
+
+                    //Desktop view
+                    res.render('desktop-version', { title: 'WhatsPromo - Panel de control', promotions: promotions });
+
                 }
-
-
-                let options = {
-                    maxAge: 1000 * 60 * 15, // would expire after 15 minutes
-                    httpOnly: true, // The cookie only accessible by the web server
-                    signed: false // Indicates if the cookie should be signed
-                }
-
-                // Set cookie
-                res.cookie('companyId', company._id, options) // options is optional
-
-
-
-                //Desktop view
-                res.render('desktop-version', { title: 'No title', promotions: promotions });
-
-
             }
         } catch (error) {
             console.log(error);
