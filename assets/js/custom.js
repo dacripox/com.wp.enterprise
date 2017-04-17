@@ -13,15 +13,19 @@ $("input[name='socialImageSRC']").change(function () {
     data: objFormData,
     //JQUERY CONVERT THE FILES ARRAYS INTO STRINGS.SO processData:false
     processData: false,
+    beforeSend: function () {
+      $('.loading-image').addClass('active');
+    },
     success: function (image) {
 
+      $('.loading-image').removeClass('active');
       console.log('Social image success uploaded');
       console.log('URL:' + image);
       // $( ".promo-image-popup img").attr("src", image.url);
 
       $(".social-image-popup img").remove();
       var myImage = new Image();
-      myImage.src = '//'+image.url; 
+      myImage.src = '//' + image.url;
 
       $(".social-image-popup").append(myImage);
 
@@ -32,7 +36,7 @@ $("input[name='socialImageSRC']").change(function () {
 $("input[name='promoImageSRC']").change(function () {
   console.log('Social image choosed');
 
-   var objFormData = new FormData();
+  var objFormData = new FormData();
   // GET FILE OBJECT 
   var objFile = $(this)[0].files[0];
   // APPEND FILE TO POST DATA
@@ -44,16 +48,19 @@ $("input[name='promoImageSRC']").change(function () {
     data: objFormData,
     //JQUERY CONVERT THE FILES ARRAYS INTO STRINGS.SO processData:false
     processData: false,
+    beforeSend: function () {
+      $('.loading-image').addClass('active');
+    },
     success: function (image) {
-
+      $('.loading-image').removeClass('active');
       console.log('Promo image success uploaded');
       console.log('URL:' + image);
       // $( ".promo-image-popup img").attr("src", image.url);
 
       $(".promo-image-popup img").remove();
       var myImage = new Image();
-      myImage.src = '//'+image.url;
-      
+      myImage.src = '//' + image.url;
+
       $(".promo-image-popup").append(myImage);
     }
   });
@@ -130,10 +137,14 @@ var checkPromoId = function (urlId) {
       type: 'GET',
       url: '//' + window.location.host + '/api/available/' + urlId,
       dataType: 'json',
+      beforeSend: function () {
+        $('#url-check').parent().addClass('loading');
+      },
       success: function (data) {
         if (data.available == true) {
           $('#url-check').removeClass('error');
           $('.url-check-alert').hide();
+          $('#url-check').parent().removeClass('loading');
 
         } else {
           $('#url-check').addClass('error');
