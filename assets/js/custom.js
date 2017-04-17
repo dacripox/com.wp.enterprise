@@ -15,15 +15,15 @@ $("input[name='socialImageSRC']").change(function () {
     processData: false,
     success: function (image) {
 
-      console.log('Promo image success uploaded');
+      console.log('Social image success uploaded');
       console.log('URL:' + image);
       // $( ".promo-image-popup img").attr("src", image.url);
 
-      $(".promo-image-popup img").remove();
+      $(".social-image-popup img").remove();
       var myImage = new Image();
-      myImage.src = image.url;
+      myImage.src = '//'+image.url; 
 
-      $(".promo-image-popup").append(myImage);
+      $(".social-image-popup").append(myImage);
 
     }
   });
@@ -52,7 +52,7 @@ $("input[name='promoImageSRC']").change(function () {
 
       $(".promo-image-popup img").remove();
       var myImage = new Image();
-      myImage.src = image.url;
+      myImage.src = '//'+image.url;
       
       $(".promo-image-popup").append(myImage);
     }
