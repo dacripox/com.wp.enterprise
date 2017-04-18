@@ -43,7 +43,7 @@ let createCompany = async (companyEmail) => {
 let getOrCreateCompany = async (companyEmail) => {
     console.log('Getting / Creating company');
 
-      return new Promise((resolve,reject)=>{
+      return new Promise(async (resolve,reject)=>{
             try {
         let response = await fetch('http://localhost:3000/company/email/' + companyEmail, { method: 'get' });
         let company = await response.json();
@@ -55,7 +55,7 @@ let getOrCreateCompany = async (companyEmail) => {
              resolve(company);
         } else if (response.status !== 200) {
             console.log('Company not created.' + response);
-            return;
+            reject(response);
         } else {
             console.log('Company already exists');
             resolve(company);
