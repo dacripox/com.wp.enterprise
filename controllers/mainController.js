@@ -32,13 +32,10 @@ let createCompany = async (companyEmail) => {
             "cif": md5(companyEmail),
             "email": companyEmail
         };
-
         let response = await request.post({ url: 'http://localhost:3000/company/', form: formData });
         console.log(response);
-        if (response.status !== 200) {
-            reject();
-        }
-        resolve(response);
+        if(response)  resolve(response);
+        else reject();
     })
 
 }
