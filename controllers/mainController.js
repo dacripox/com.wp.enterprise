@@ -80,7 +80,7 @@ let getOrCreateCompany = async (companyEmail) => {
         if (response.status == 404) {
             console.log("Trying to create a company.");
             let company = await createCompany(companyEmail);
-            return company;
+            return JSON.parse(company);
         } else if (response.status !== 200) {
             console.log('Company not created.' + response);
             return;
@@ -196,10 +196,10 @@ module.exports = {
 
 
                 p.then(async (company) => {
-                    let companyJSON = JSON.parse(JSON.stringify(company));
+                    
 
 
-                    let promotions = await getPromotionsByCompanyId(companyJSON._id);
+                    let promotions = await getPromotionsByCompanyId(company._id);
 
                     let md = new mobileDetect(req.headers['user-agent']);
                     if (md.is('bot')) {
@@ -220,13 +220,16 @@ module.exports = {
                     }
 
 
-                    console.log('companyId: ' + companyJSON._id)
-                    // Set cookie
-                    res.cookie('companyId', companyJSON._id, options) // options is optional
+                    console.log('companyId: ' + company._id)
+               
+                        // Set cookie
+                    res.cookie('companyId', company._id, options) // options is optional
 
 
                     //Desktop view
                     res.render('desktop-version', { title: 'WhatsPromo - Panel de control', promotions: promotions });
+                
+                    
 
                 })
 
