@@ -29,6 +29,10 @@ $("input[name='socialImageSRC']").change(function () {
 
       $(".social-image-popup").append(myImage);
 
+    }, 
+    error : function (){
+       swal("Error al subir la imagen!", "Lo sentimos, hubo un error al cargar la imagen seleccionada. Prueba con una imagen diferente.", "error");
+        $('.loading-image').removeClass('active');
     }
   });
 });
@@ -62,6 +66,10 @@ $("input[name='promoImageSRC']").change(function () {
       myImage.src = '//' + image.url;
 
       $(".promo-image-popup").append(myImage);
+    }, 
+    error : function (){
+       swal("Error al subir la imagen!", "Lo sentimos, hubo un error al cargar la imagen seleccionada. Prueba con una imagen diferente.", "error");
+        $('.loading-image').removeClass('active');
     }
   });
 });
@@ -85,9 +93,13 @@ $('.button.sendPromo').on('click', function (e) {
     data: $(form).serialize(),//only input
     success: function (response) {
       console.log(response);
+
+      //Display notification to user
+      swal("Promoción creada correctamente!", "La promoción ha sido creada correctamente.", "success");
     },
     error: function (error) {
       console.error(error);
+      swal("Error al crear la promoción!", "Lo sentimos, hubo un error al crear la promoción. Comprueba haber introducido todos los datos, correctamente.", "error");
     }
   });
 
@@ -313,9 +325,14 @@ $(document).ready(function () {
         $("input[name='facebookTrackingPixel']").val(promotion.facebookTrackingPixel);
         $("input[name='googleTrackingPixel']").val(promotion.googleTrackingPixel);
 
+
+
+//Display notification to user
+swal("Guardado con éxito!", "La promoción ha sido actualizada correctamente.", "success")
       },
       error: function (error) {
         console.error(error);
+         swal("Error al modificar la promoción!", "Lo sentimos, hubo un error al actualizar los datos de la promoción. Comprueba haber introducido todos los datos, correctamente.", "error");
       }
     });
   }
@@ -421,13 +438,14 @@ $(document).ready(function () {
   });
 
   var formState = 0;
-  $('.form-navigate .next').click(function () {
+  $('.form-navigate .next, .second-form-step').click(function () {
     if (formState === 0) {
       $('.form-navigate .back').removeClass('disabled');
       //$('.form-navigate .next').addClass('disabled');
       $('.second-form').show();
       $('.first-form').hide();
-
+      $('.second-form-step').removeClass('active');
+      $('.first-form-step').addClass('active');
       //Show submit button
       $('.sendPromo').show();
       $('.form-navigate .next').hide();
@@ -435,10 +453,12 @@ $(document).ready(function () {
     }
   });
 
-  $('.form-navigate .back').click(function () {
+  $('.form-navigate .back, .first-form-step').click(function () {
     if (formState === 1) {
       $('.form-navigate .next').show();
       $('.sendPromo').hide();
+      $('.first-form-step').removeClass('active');
+      $('.second-form-step').addClass('active');
       $('.form-navigate .next').removeClass('disabled');
       $('.form-navigate .back').addClass('disabled');
       $('.first-form').show();
