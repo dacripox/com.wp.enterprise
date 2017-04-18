@@ -37,6 +37,7 @@ let createCompany = async (companyEmail) => {
 }
 
 let getOrCreateCompany = async (companyEmail) => {
+    console.log('Getting / Creating company');
     try {
         let response = await fetch('http://localhost:3000/company/email/' + companyEmail, { method: 'get' });
         let company = await response.json();
@@ -174,12 +175,17 @@ module.exports = {
                         signed: false // Indicates if the cookie should be signed
                     }
 
-                    // Set cookie
-                    res.cookie('companyId', company._id, options) // options is optional
 
+                    if(company){
+                        // Set cookie
+                        res.cookie('companyId', company._id, options) // options is optional
 
-                    //Desktop view
-                    res.render('desktop-version', { title: 'WhatsPromo - Panel de control', promotions: promotions });
+                   
+                        //Desktop view
+                        res.render('desktop-version', { title: 'WhatsPromo - Panel de control', promotions: promotions });
+                    }
+
+                    
 
                 }
             }
