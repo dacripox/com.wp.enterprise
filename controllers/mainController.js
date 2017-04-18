@@ -30,9 +30,16 @@ let createCompany = async (companyEmail) => {
         "cif": md5(companyEmail),
         "email": companyEmail
     };
-    let response = await request.post({ url: 'http://localhost:3000/company/', form: formData });
-    console.log(response);
-    return response;
+
+    return new Promise((resolve,reject) => {
+
+        let response = await request.post({ url: 'http://localhost:3000/company/', form: formData });
+        console.log(response);
+         if (response.status !== 200) {
+            reject();
+        }
+        resolve(response);
+    })
 
 }
 
@@ -60,8 +67,8 @@ let getOrCreateCompany = async (companyEmail) => {
     }
 
 
-    
-    
+
+
 }
 
 let newPromotion = async (promotion) => {
@@ -180,16 +187,17 @@ module.exports = {
                     }
 
 
-                    if(company){
+                    if (company) {
+                        console.log('companyId: '+company._id)
                         // Set cookie
                         res.cookie('companyId', company._id, options) // options is optional
 
-                   
+
                         //Desktop view
                         res.render('desktop-version', { title: 'WhatsPromo - Panel de control', promotions: promotions });
                     }
 
-                    
+
 
                 }
             }
