@@ -42,26 +42,33 @@ let createCompany = async (companyEmail) => {
 
 let getOrCreateCompany = async (companyEmail) => {
     console.log('Getting / Creating company');
-    try {
+
+      return new Promise((resolve,reject)=>{
+            try {
         let response = await fetch('http://localhost:3000/company/email/' + companyEmail, { method: 'get' });
         let company = await response.json();
 
+      
         if (response.status == 404) {
             console.log("Trying to create a company.");
             let company = await createCompany(companyEmail);
-            return company;
+             resolve(company);
         } else if (response.status !== 200) {
             console.log('Company not created.' + response);
             return;
         } else {
             console.log('Company already exists');
-            return company;
+            resolve(company);
         }
 
     } catch (error) {
         console.error('Fetch error. STATUS');
         console.error(error);
+        reject(error);
     }
+    });
+    
+    
 
 
 
@@ -185,6 +192,8 @@ module.exports = {
 
 
                     if (company) {
+
+
                         console.log('companyId: ' + company._id)
                         // Set cookie
                         res.cookie('companyId', company._id, options) // options is optional
