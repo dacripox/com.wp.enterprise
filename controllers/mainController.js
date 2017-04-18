@@ -26,16 +26,16 @@ let getPromotionsByCompanyId = async (companyId) => {
 
 
 let createCompany = async (companyEmail) => {
-    var formData = {
-        "cif": md5(companyEmail),
-        "email": companyEmail
-    };
 
-    return new Promise( async(resolve,reject) => {
+    return new Promise(async (resolve, reject) => {
+        var formData = {
+            "cif": md5(companyEmail),
+            "email": companyEmail
+        };
 
         let response = await request.post({ url: 'http://localhost:3000/company/', form: formData });
         console.log(response);
-         if (response.status !== 200) {
+        if (response.status !== 200) {
             reject();
         }
         resolve(response);
@@ -188,7 +188,7 @@ module.exports = {
 
 
                     if (company) {
-                        console.log('companyId: '+company._id)
+                        console.log('companyId: ' + company._id)
                         // Set cookie
                         res.cookie('companyId', company._id, options) // options is optional
 
