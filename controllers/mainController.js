@@ -37,23 +37,25 @@ let createCompany = async (companyEmail) => {
         if(response)  resolve(response);
         else reject();
     })
+    
 
 }
 
 let getOrCreateCompany = async (companyEmail) => {
     console.log('Getting / Creating company');
 
-      return new Promise(async (resolve,reject)=>{
-            try {
-        let response = await fetch('http://localhost:3000/company/email/' + companyEmail, { method: 'get' });
-        let company = await response.json();
+  return new Promise(async (resolve, reject) => {
+        var formData = {};
+        
 
-      
-        if (response.status == 404) {
+    try {
+        let response = await request.get({ url: 'http://localhost:3000/company/', form: formData });
+            
+        if (response.statusCode == 404) {
             console.log("Trying to create a company.");
             let company = await createCompany(companyEmail);
              resolve(company);
-        } else if (response.status !== 200) {
+        } else if (response.statusCode !== 200) {
             console.log('Company not created.' + response);
             reject(response);
         } else {
