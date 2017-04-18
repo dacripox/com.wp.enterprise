@@ -444,8 +444,8 @@ swal("Guardado con éxito!", "La promoción ha sido actualizada correctamente.",
       //$('.form-navigate .next').addClass('disabled');
       $('.second-form').show();
       $('.first-form').hide();
-      $('.second-form-step').removeClass('active');
-      $('.first-form-step').addClass('active');
+      $('.first-form-step').removeClass('active');
+      $('.second-form-step').addClass('active');
       //Show submit button
       $('.sendPromo').show();
       $('.form-navigate .next').hide();
@@ -457,8 +457,8 @@ swal("Guardado con éxito!", "La promoción ha sido actualizada correctamente.",
     if (formState === 1) {
       $('.form-navigate .next').show();
       $('.sendPromo').hide();
-      $('.first-form-step').removeClass('active');
-      $('.second-form-step').addClass('active');
+      $('.second-form-step').removeClass('active');
+      $('.first-form-step').addClass('active');
       $('.form-navigate .next').removeClass('disabled');
       $('.form-navigate .back').addClass('disabled');
       $('.first-form').show();
@@ -496,9 +496,6 @@ swal("Guardado con éxito!", "La promoción ha sido actualizada correctamente.",
     }
 
   });
-
-
-
 
 
 

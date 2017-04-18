@@ -9,7 +9,7 @@ var favicon = require('serve-favicon')
 app.use(favicon(path.join(__dirname, 'assets/favicons', 'favicon.ico')))
 
 var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({limit: '5mb', extended: false }));
 
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
