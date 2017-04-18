@@ -31,7 +31,7 @@ let createCompany = async (companyEmail) => {
         "email": companyEmail
     };
 
-    return new Promise((resolve,reject) => {
+    return new Promise( async(resolve,reject) => {
 
         let response = await request.post({ url: 'http://localhost:3000/company/', form: formData });
         console.log(response);
