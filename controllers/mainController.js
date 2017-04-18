@@ -34,48 +34,67 @@ let createCompany = async (companyEmail) => {
         };
         let response = await request.post({ url: 'http://localhost:3000/company/', form: formData });
         console.log(response);
-        if(response)  resolve(response);
+        if (response) resolve(response);
         else reject();
     })
-    
+
 
 }
-
+/*
 let getOrCreateCompany = async (companyEmail) => {
     console.log('Getting / Creating company');
 
-  return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         var formData = {};
-        
+        request.get({ url: 'http://localhost:3000/company/email/' + companyEmail, form: formData }, async function (err, response, body) {
+            if (response === null || response === undefined) {
+                reject("Empty reponse");
+            }
+            var code = response.statusCode;
+            if (!err && ((body && body.errors) || code > 399)) {
+                if (code == 404) {
+                    console.log("Trying to create a company.");
+                    let company = await createCompany(companyEmail);
+                    resolve(company.body);
+                } else {
+                    console.log('Company not created.' + response);
+                    reject(response);
+                }
+            }
+            resolve(response.body);
 
+          
+
+        });
+    });
+
+}
+*/
+
+
+let getOrCreateCompany = async (companyEmail) => {
     try {
-        let response = await request.get({ url: 'http://localhost:3000/company/', form: formData });
-            
-        if (response.statusCode == 404) {
+        let response = await fetch('http://localhost:3000/company/email/' + companyEmail, { method: 'get' });
+        let company = await response.json();
+
+        if (response.status == 404) {
             console.log("Trying to create a company.");
             let company = await createCompany(companyEmail);
-             resolve(company);
-        } else if (response.statusCode !== 200) {
+            return company;
+        } else if (response.status !== 200) {
             console.log('Company not created.' + response);
-            reject(response);
+            return;
         } else {
             console.log('Company already exists');
-            resolve(company);
+            return company;
         }
 
     } catch (error) {
         console.error('Fetch error. STATUS');
         console.error(error);
-        reject(error);
     }
-    });
-    
-    
-
-
-
-
 }
+
 
 let newPromotion = async (promotion) => {
 
@@ -167,12 +186,20 @@ module.exports = {
         try {
             if (companyEmail) {
                 // Promise.all(iterable)
-                let company = await getOrCreateCompany(companyEmail);
-                if (!company) { console.log('Company not found'); }
-                else {
 
-                    let promotions = await getPromotionsByCompanyId(company._id);
+                p = new Promise(async (resolve, reject) => {
 
+                    let company = await getOrCreateCompany(companyEmail);
+                    if (company) resolve(company);
+                    else reject();
+                })
+
+
+                p.then(async (company) => {
+                    let companyJSON = JSON.parse(JSON.stringify(company));
+
+
+                    let promotions = await getPromotionsByCompanyId(companyJSON._id);
 
                     let md = new mobileDetect(req.headers['user-agent']);
                     if (md.is('bot')) {
@@ -193,25 +220,23 @@ module.exports = {
                     }
 
 
-                    if (company) {
+                    console.log('companyId: ' + companyJSON._id)
+                    // Set cookie
+                    res.cookie('companyId', companyJSON._id, options) // options is optional
 
 
-                        console.log('companyId: ' + company._id)
-                        // Set cookie
-                        res.cookie('companyId', company._id, options) // options is optional
+                    //Desktop view
+                    res.render('desktop-version', { title: 'WhatsPromo - Panel de control', promotions: promotions });
 
+                })
 
-                        //Desktop view
-                        res.render('desktop-version', { title: 'WhatsPromo - Panel de control', promotions: promotions });
-                    }
-
-
-
-                }
             }
         } catch (error) {
             console.log(error);
         }
+
+
+
     },
 
 
