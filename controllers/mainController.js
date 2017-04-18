@@ -38,9 +38,8 @@ let createCompany = async (companyEmail) => {
 
 let getOrCreateCompany = async (companyEmail) => {
     console.log('Getting / Creating company');
-
     try {
-        let response = await fetch(, { method: 'get' });
+        let response = await fetch('http://localhost:3000/company/email/' + companyEmail, { method: 'get' });
         let company = await response.json();
 
         if (response.status == 404) {
@@ -61,6 +60,8 @@ let getOrCreateCompany = async (companyEmail) => {
     }
 
 
+    
+    
 }
 
 let newPromotion = async (promotion) => {
@@ -180,8 +181,6 @@ module.exports = {
 
 
                     if(company){
-
-                        console.log(company._id);
                         // Set cookie
                         res.cookie('companyId', company._id, options) // options is optional
 
