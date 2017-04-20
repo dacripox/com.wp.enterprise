@@ -182,6 +182,8 @@ module.exports = {
         let companyEmail = req.cookies.companyEmail;
         console.log(companyEmail);
 
+if(!companyEmail) res.redirect(req.get('referer'));
+
         //Create company if not exists
         try {
             if (companyEmail) {
