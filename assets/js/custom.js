@@ -26,13 +26,13 @@ $("input[name='socialImageSRC']").change(function () {
       $(".social-image-popup img").remove();
       var myImage = new Image();
       myImage.src = '//' + image.url;
-
+      $("#socialImage").val(image.url);
       $(".social-image-popup").append(myImage);
 
-    }, 
-    error : function (){
-       swal("Error al subir la imagen!", "Lo sentimos, hubo un error al cargar la imagen seleccionada. Prueba con una imagen diferente.", "error");
-        $('.loading-image').removeClass('active');
+    },
+    error: function () {
+      swal("Error al subir la imagen!", "Lo sentimos, hubo un error al cargar la imagen seleccionada. Prueba con una imagen diferente.", "error");
+      $('.loading-image').removeClass('active');
     }
   });
 });
@@ -64,12 +64,12 @@ $("input[name='promoImageSRC']").change(function () {
       $(".promo-image-popup img").remove();
       var myImage = new Image();
       myImage.src = '//' + image.url;
-
+      $("#promoImage").val(image.url);
       $(".promo-image-popup").append(myImage);
-    }, 
-    error : function (){
-       swal("Error al subir la imagen!", "Lo sentimos, hubo un error al cargar la imagen seleccionada. Prueba con una imagen diferente.", "error");
-        $('.loading-image').removeClass('active');
+    },
+    error: function () {
+      swal("Error al subir la imagen!", "Lo sentimos, hubo un error al cargar la imagen seleccionada. Prueba con una imagen diferente.", "error");
+      $('.loading-image').removeClass('active');
     }
   });
 });
@@ -83,23 +83,46 @@ $("input[name='acceptConditions']").change(function () {
   }
 });
 
+
+
 $('.button.sendPromo').on('click', function (e) {
+  $(this).prop('disabled', true);
   var form = $("form.promotionForm");
 
+
+  /* Get input values from form */
+  formValues = jQuery(form).serializeArray();
+
+  /* Because serializeArray() ignores unset checkboxes and radio buttons: */
+  if (jQuery('input[name="showLocalizationX"]').is(':checked')) {
+    formValues = formValues.concat({ "name": "showLocalization", "value": true });
+  } else {
+    formValues = formValues.concat({ "name": "showLocalization", "value": false });
+  }
 
   $.ajax({
     type: "POST",
     url: "/api/promotion",
-    data: $(form).serialize(),//only input
+    data: formValues,//only input
+
+
+
     success: function (response) {
       console.log(response);
 
+      $('.button.sendPromo').prop('disabled', false);
       //Display notification to user
-      swal("Promoción creada correctamente!", "La promoción ha sido creada correctamente.", "success");
+      swal({ title: "Promoción guardada correctamente!", text: "La promoción ha sido guardado correctamente.", type: "success", closeOnConfirm: false }, function () { location.reload(); });
+
+      setTimeout(function () {
+        location.reload();
+      }, 1000)
+
     },
     error: function (error) {
+      $('.button.sendPromo').prop('disabled', false);
       console.error(error);
-      swal("Error al crear la promoción!", "Lo sentimos, hubo un error al crear la promoción. Comprueba haber introducido todos los datos, correctamente.", "error");
+      swal("Error al guardar la promoción!", "Lo sentimos, hubo un error al guardar la promoción. Comprueba haber introducido todos los datos, correctamente. (Debes seleccionar una fecha de inicio, la primera vez que creas la promoción.)", "error");
     }
   });
 
@@ -215,6 +238,13 @@ function initMap() {
     //Change address on input on marker drag
     marker.addListener('dragend', markerDragHandler);
 
+    var position = marker.getPosition();
+    var pos = position.toJSON();
+    console.log(pos);
+    document.getElementById('lat').value = pos.lat;
+    document.getElementById('lng').value = pos.lng;
+
+    document.getElementById('address').value = place.formatted_address;
 
     if (place.geometry.viewport) {
       // Only geocodes have viewport.
@@ -247,10 +277,10 @@ function markerDragHandler() {
   var geocoder = new google.maps.Geocoder();
   console.log('changed position');
   var position = marker.getPosition();
-  console.log(position.toJSON());
-
-  document.getElementById('lat').value = position.lat;
-  document.getElementById('lng').value = position.lng;
+  var pos = position.toJSON()
+  console.log(pos);
+  document.getElementById('lat').value = pos.lat;
+  document.getElementById('lng').value = pos.lng;
   // document.getElementById('postcode').value = ;
   // document.getElementById('address').value = ;
   geocoder.geocode({
@@ -294,7 +324,7 @@ $(document).ready(function () {
       dataType: 'json',
       success: function (promotion) {
 
-        $("input[name='updatePromotionId']").val(promo_id);
+        $("input[name='updatePromotionId']").val(promo_id); //if set, modify instead create
 
         $("textarea[name='promoTitle']").val(promotion.promoTitle);
 
@@ -303,7 +333,9 @@ $(document).ready(function () {
         $("textarea[name='promoDescription']").summernote('code', promotion.promoDescription);
         $("textarea[name='promoLegalCond']").summernote('code', promotion.promoLegalCond);
 
-        $("input[name='showLocalization']").val(promotion.showLocalization);
+
+        jQuery('input[name="showLocalizationX"]').prop('checked', promotion.showLocalization);
+
         $("input[name='lat']").val(promotion.lat);
         $("input[name='lng']").val(promotion.lng);
         $("input[name='postalCode']").val(promotion.postalCode);
@@ -319,6 +351,9 @@ $(document).ready(function () {
         $('#rangestart').calendar('set date', new Date(promotion.startDate), true, false);
         $('#rangeend').calendar('set date', new Date(promotion.endDate), true, false);
 
+         $('.startDateHidden').val(new Date(promotion.startDate));
+         $('.endDateHidden').val(new Date(promotion.endDate));
+
         $("input[name='winnersNumber']").val(promotion.winnersNumber);
         $("input[name='itemMeanPrice']").val(promotion.itemMeanPrice);
 
@@ -327,12 +362,12 @@ $(document).ready(function () {
 
 
 
-//Display notification to user
-swal("Guardado con éxito!", "La promoción ha sido actualizada correctamente.", "success")
+        //Display notification to user
+        //  swal("Guardado con éxito!", "La promoción ha sido actualizada correctamente.", "success")
       },
       error: function (error) {
         console.error(error);
-         swal("Error al modificar la promoción!", "Lo sentimos, hubo un error al actualizar los datos de la promoción. Comprueba haber introducido todos los datos, correctamente.", "error");
+        swal("Error al modificar la promoción!", "Lo sentimos, hubo un error al actualizar los datos de la promoción. Comprueba haber introducido todos los datos, correctamente.", "error");
       }
     });
   }
@@ -708,14 +743,14 @@ swal("Guardado con éxito!", "La promoción ha sido actualizada correctamente.",
       console.log("start date: " + date);
       //$('#rangeend').calendar.settings.maxDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 5);
       $('#rangeend').focus(false);
-      console.log($('#rangeend').calendar.settings.maxDate);
+      //console.log($('#rangeend').calendar.settings.maxDate);
       endcalendar.maxDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 15);
       $('#rangeend').calendar(endcalendar);
       $('#rangeend').calendar('refresh');
 
       //Update form values
-      $('.startDateHidden').val($('#rangestart').calendar('get date').toISOString());
-      $('.endDateHidden').val($('#rangeend').calendar('get date').toISOString());
+      $('.startDateHidden').val(date.toISOString());
+      //  $('.endDateHidden').val($('#rangeend').calendar('get date').toISOString());
 
     },
     minDate: new Date(),
@@ -729,7 +764,8 @@ swal("Guardado con éxito!", "La promoción ha sido actualizada correctamente.",
   });
 
   //Set today at first calendar
-  $('#rangestart').calendar('set date', new Date(2015, 5, 25, 0, 0, 0, 0), true, false);
+  $('#rangestart').calendar('set date', new Date(), true, false);
+ $('.startDateHidden').val((new Date()).toISOString());
 
   //Second calendar
   var endcalendar = {
@@ -747,8 +783,8 @@ swal("Guardado con éxito!", "La promoción ha sido actualizada correctamente.",
 
 
       //Update form values
-      $('.startDateHidden').val($('#rangestart').calendar('get date').toISOString());
-      $('.endDateHidden').val($('#rangeend').calendar('get date').toISOString());
+      //  $('.startDateHidden').val(date.toISOString());
+      if (date) $('.endDateHidden').val(date.toISOString());
 
     },
     //maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5),
@@ -767,12 +803,12 @@ swal("Guardado con éxito!", "La promoción ha sido actualizada correctamente.",
   $('#rangeend').calendar('set date', new Date(), true, false);
 
 
-
-  $('.startDateHidden').val($('#rangestart').calendar('get date').toISOString());
-  $('.endDateHidden').val($('#rangeend').calendar('get date').toISOString());
-
-
-
+  var calendarInitialized = false;
+  if (!calendarInitialized) {
+    $('.startDateHidden').val($('#rangestart').calendar('get date').toISOString());
+    $('.endDateHidden').val($('#rangeend').calendar('get date').toISOString());
+    calendarInitialized = true;
+  }
 
 
 

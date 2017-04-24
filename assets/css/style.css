@@ -1,5 +1,11 @@
 
 /*Custom styles*/
+
+element.style {
+    border-bottom: rgb(255, 96, 96) solid 0.2em;
+}
+
+
 .hidden {
  display: none !important;
 }

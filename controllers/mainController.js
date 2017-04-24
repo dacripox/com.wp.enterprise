@@ -19,6 +19,7 @@ let getPromotionsByCompanyId = async (companyId) => {
 
         console.error('Fetch error. STATUS: ' + response.status);
         console.error(error);
+        return;
     }
 }
 
@@ -32,10 +33,15 @@ let createCompany = async (companyEmail) => {
             "cif": md5(companyEmail),
             "email": companyEmail
         };
-        let response = await request.post({ url: 'http://localhost:3000/company/', form: formData });
-        console.log(response);
-        if (response) resolve(response);
-        else reject();
+        try {
+            let response = await request.post({ url: 'http://localhost:3000/company/', form: formData });
+            console.log(response);
+            if (response) resolve(response);
+            else reject();
+        } catch (error) {
+            reject(error);
+        }
+
     })
 
 
@@ -92,6 +98,7 @@ let getOrCreateCompany = async (companyEmail) => {
     } catch (error) {
         console.error('Fetch error. STATUS');
         console.error(error);
+        return;
     }
 }
 
@@ -125,10 +132,17 @@ let newPromotion = async (promotion) => {
         "googleTrackingPixel": promotion.googleTrackingPixel
     };
 
+    try {
+        let response = await request.post({ url: 'http://localhost:3000/promotion/', form: formData });
+        console.log(response);
+        if (response.status > 299) return;
+        return response;
+    } catch (error) {
+        console.log(error);
+        return;
 
-    let response = await request.post({ url: 'http://localhost:3000/promotion/', form: formData });
-    console.log(response);
-    return response;
+    }
+
 };
 
 
@@ -159,10 +173,16 @@ let updatePromotion = async (promotion) => {
         "facebookTrackingPixel": promotion.facebookTrackingPixel,
         "googleTrackingPixel": promotion.googleTrackingPixel
     };
+    try {
+        let response = await request.put({ url: 'http://localhost:3000/promotion/' + promotion.updatePromotionId, form: formData });
+        console.log(response);
+        if (response.status > 299) return;
+        return response;
+    } catch (error) {
+        console.log(error);
+        return;
+    }
 
-    let response = await request.put({ url: 'http://localhost:3000/promotion/' + promotion.updatePromotionId, form: formData });
-    console.log(response);
-    return response;
 };
 
 
@@ -182,7 +202,7 @@ module.exports = {
         let companyEmail = req.cookies.companyEmail;
         console.log(companyEmail);
 
-if(!companyEmail) res.redirect(req.get('referer'));
+        if (!companyEmail) res.redirect(req.get('referer'));
 
         //Create company if not exists
         try {
@@ -198,7 +218,7 @@ if(!companyEmail) res.redirect(req.get('referer'));
 
 
                 p.then(async (company) => {
-                    
+
 
 
                     let promotions = await getPromotionsByCompanyId(company._id);
@@ -223,15 +243,15 @@ if(!companyEmail) res.redirect(req.get('referer'));
 
 
                     console.log('companyId: ' + company._id)
-               
-                        // Set cookie
+
+                    // Set cookie
                     res.cookie('companyId', company._id, options) // options is optional
 
 
                     //Desktop view
                     res.render('desktop-version', { title: 'WhatsPromo - Panel de control', promotions: promotions });
-                
-                    
+
+
 
                 })
 
@@ -272,7 +292,7 @@ if(!companyEmail) res.redirect(req.get('referer'));
 
 
     /**
-     * mainController.promotionIdAvailable()
+     * mainController.showPromotion()
      */
     showPromotion: async function (req, res) {
         var promoId = req.params.promoId;
@@ -286,7 +306,7 @@ if(!companyEmail) res.redirect(req.get('referer'));
             return res.status(200).json(data);
 
         } catch (error) {
-            console.error('Fetch error. ');
+            console.error('Fetch error when showing promotion');
             console.error(error);
             return res.status(500).json({
                 error: error
@@ -333,10 +353,29 @@ if(!companyEmail) res.redirect(req.get('referer'));
         if (req.body.updatePromotionId) {
             promotion.updatePromotionId = req.body.updatePromotionId;
             let updatedPromo = await updatePromotion(promotion);
-            console.log('updated promotion: ' + updatedPromo)
+
+            if (updatedPromo) {
+                console.log('updated promotion: ' + updatedPromo)
+                res.status(200).json({ promotionStatus: "updated" });
+            } else {
+                console.error('Error when updating promotion. ');
+                return res.status(500).json({
+                    message: 'Error when updating promotion.'
+                });
+            }
         } else {
             let newPromo = await newPromotion(promotion);
-            console.log('created promotion: ' + newPromo)
+
+            if (newPromo) {
+                res.status(200).json({ promotionStatus: "updated" });
+                console.log('created promotion: ' + newPromo)
+
+            } else {
+                console.error('Error when creating new promotion. ');
+                return res.status(500).json({
+                    message: 'Error when creating new promotion.'
+                });
+            }
         }
 
     },
@@ -355,13 +394,17 @@ if(!companyEmail) res.redirect(req.get('referer'));
 
         Jimp.read(userImage.data).then(function (img) {
             let file = filePathWithoutExt + '.jpg';
-            img.scaleToFit(600, 400)
-                .quality(80)   // set JPEG quality
+            img.scaleToFit(960, 768)
+                .quality(85)   // set JPEG quality
                 .write(file, () => {
                     return res.status(200).json({ url: hostname + '/' + filePathWithoutExt + '.jpg' });
                 }) // save
         }).catch(function (err) {
-            console.error(err);
+            console.error('Error when uploading promo. image. ' + err);
+            return res.status(500).json({
+                message: 'Error when uploading promo. image.',
+                error: err
+            });
         });
 
     },
@@ -380,13 +423,17 @@ if(!companyEmail) res.redirect(req.get('referer'));
 
         Jimp.read(userImage.data).then(function (img) {
             let file = filePathWithoutExt + '.jpg';
-            img.scaleToFit(600, 400)
+            img.scaleToFit(1200, 627)
                 .quality(80)   // set JPEG quality
                 .write(file, () => {
                     return res.status(200).json({ url: hostname + '/' + filePathWithoutExt + '.jpg' });
                 }) // save
         }).catch(function (err) {
-            console.error(err);
+            console.error('Error when uploading social image. ' + err);
+            return res.status(500).json({
+                message: 'Error when uploading social image.',
+                error: err
+            });
         });
     }
 
