@@ -328,7 +328,9 @@ $(document).ready(function () {
 
         $("textarea[name='promoTitle']").val(promotion.promoTitle);
 
-        $(".promo-image-popup img").attr("src", promotion.promoImage);
+        $(".promo-image-popup img").attr("src", 'https://'+promotion.promoImage);
+
+        $(".social-image-popup img").attr("src", 'https://'+promotion.socialImage);
 
         $("textarea[name='promoDescription']").summernote('code', promotion.promoDescription);
         $("textarea[name='promoLegalCond']").summernote('code', promotion.promoLegalCond);
@@ -346,7 +348,6 @@ $(document).ready(function () {
         $("input[name='promoId']").val(promotion.promoId);  //promotion URL
         $("input[name='promoId']").prop("disabled", true);  //promotion URL
 
-        $(".social-image-popup img").attr("src", promotion.socialImage);
 
         $('#rangestart').calendar('set date', new Date(promotion.startDate), true, false);
         $('#rangeend').calendar('set date', new Date(promotion.endDate), true, false);

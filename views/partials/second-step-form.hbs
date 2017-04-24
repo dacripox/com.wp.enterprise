@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    {{#if promoType}} {{!--Display only if 1 or 2, hide when 0 (free) --}}
+    {{#unless promoType}} {{!--Display only if 1 or 2, hide when 0 (free) --}}
     <div class="field basic-membership">
         <label for="">Facebook Pixel ID</label>
         <div class="ui input">
@@ -97,7 +97,7 @@
         </div>
     </div>
 
-{{/if}}
+{{/unless}}
     <div class="field">
         <div class="ui checkbox">
             <input type="checkbox" name="acceptConditions" tabindex="0" class="hidden">
