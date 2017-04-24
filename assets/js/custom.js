@@ -25,7 +25,7 @@ $("input[name='socialImageSRC']").change(function () {
 
       $(".social-image-popup img").remove();
       var myImage = new Image();
-      myImage.src = '//' + image.url;
+      myImage.src = 'https://' + image.url;
       $("#socialImage").val(image.url);
       $(".social-image-popup").append(myImage);
 
@@ -63,7 +63,7 @@ $("input[name='promoImageSRC']").change(function () {
 
       $(".promo-image-popup img").remove();
       var myImage = new Image();
-      myImage.src = '//' + image.url;
+      myImage.src = 'https://' + image.url;
       $("#promoImage").val(image.url);
       $(".promo-image-popup").append(myImage);
     },
