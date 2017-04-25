@@ -156,7 +156,7 @@ window.addEventListener('beforeinstallprompt', function (e) {
 
 
 window.onpopstate = function (event) {
-  alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+  console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
 };
 
 
@@ -348,6 +348,7 @@ $(document).ready(function () {
         $("input[name='promoId']").val(promotion.promoId);  //promotion URL
         $("input[name='promoId']").prop("disabled", true);  //promotion URL
 
+        $("input[name='shareMessages']").val(promotion.shareMessages);  
 
         $('#rangestart').calendar('set date', new Date(promotion.startDate), true, false);
         $('#rangeend').calendar('set date', new Date(promotion.endDate), true, false);

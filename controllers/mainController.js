@@ -346,7 +346,14 @@ module.exports = {
         promotion.fullAddress = req.body.fullAddress;
         promotion.companyId = req.cookies.companyId;
         promotion.trollNumber = req.body.trollNumber;
-        promotion.shareMessages = req.body.shareMessages;
+       // if(req.body.shareMessages){
+        //    let shareMessages = [];
+        //    shareMessages.push(req.body.shareMessages);
+        //    promotion.shareMessages= shareMessages;
+        //}else{
+        //    promotion.shareMessages = undefined;
+       // }
+       promotion.shareMessages = req.body.shareMessages;
         promotion.facebookTrackingPixel = req.body.facebookTrackingPixel;
         promotion.googleTrackingPixel = req.body.googleTrackingPixel;
 

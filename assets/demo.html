@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by dacripo (http://jsbin.com/sukuzij/3/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+<head>
+
+ <!--Meta Tags-->
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <title>WhatsPromo</title>
+ <link rel="canonical" href="whatspromo.com">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta name="keywords" content="some, kind, of, keywords, for, seo">
+ <meta name="description" content="A short 200 chars description.">
+ <!--FACEBOOK-->
+ <meta property="og:title" content="">
+ <meta property="og:site_name" content="">
+ <meta property="og:url" content="whatspromo.com">
+ <meta property="og:description" content="A short 200 chars description.">
+ <meta property="og:image" content="">
+ <meta property="fb:app_id" content="">
+ <meta property="og:type" content="website">
+ <meta property="og:locale" content="">
+ <!--TWITTER-->
+ <meta property="twitter:card" content="summary">
+ <meta property="twitter:title" content="">
+ <meta property="twitter:description" content="">
+ <meta property="twitter:creator" content="">
+ <meta property="twitter:url" content="whatspromo.com">
+ <meta property="twitter:image" content="">
+ <meta property="twitter:image:alt" content="">
+
+
+ <!--jQuery-->
+ <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+ <!--Bootstrap-->
+ <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+ <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+
+ <!-- include summernote css/js-->
+ <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+ <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+ <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/lang/summernote-es-ES.js"></script>
+ <script src="https://cdn.rawgit.com/nilobarp/summernote-ext-emoji/master/dist/summernote-ext-emoji-min.js"></script>
+
+ <link href="https://cdn.rawgit.com/ellekasai/twemoji-awesome/gh-pages/twemoji-awesome.css" rel="stylesheet">
+ <link href="https://cdn.rawgit.com/JustinEldracher/summernote-plugins/master/summernote-emoji/summernote-emoji.css" rel="stylesheet">
+ <script src="https://rawgit.com/JustinEldracher/summernote-plugins/master/summernote-emoji/summernote-emoji.js"></script>
+
+
+ <!--FontAwesome-->
+ <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+ <!--CSS Normalize-->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.4/sammy.min.js"></script>
+
+ <!--Semantic UI-->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.css">
+
+ <!--Semantic UI - Calendar-->
+ <!--Old version v0.1-->
+ <!-- <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" /> -->
+ <!-- <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script> -->
+
+ <!-- v0.6-->
+ <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/217c3a03e5ab7cb7bd8cb994549b14f4e5aefb15/dist/calendar.css" rel="stylesheet" type="text/css" />
+ <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/217c3a03e5ab7cb7bd8cb994549b14f4e5aefb15/dist/calendar.js"></script>
+
+ <!--Semantic UI - Table sorting-->
+ <!--    <script type="text/javascript" src="http://semantic-ui.com/javascript/library/tablesort.js"></script> -->
+
+ <!--Chart JS-->
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+ <!--Data Tables CSS - Customized for Semantic UI-->
+ <!--    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.semanticui.min.css"> -->
+
+ <!--Data Tables JS-->
+ <!--    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script> -->
+
+ <!--Data Tables JS - Customized for Semantic UI-->
+ <!--    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.semanticui.min.js"></script> -->
+
+
+ <!--Sweet Alert 2-->
+ <script src="https://cdn.jsdelivr.net/sweetalert2/6.2.1/sweetalert2.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/sweetalert2/6.2.3/sweetalert2.min.css">
+ <!--Handlebars JS-->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js"></script>
+
+
+
+
+
+
+ <!--WebApp Manifest-->
+ <link rel="manifest" href="https://rawgit.com/dacripo/49f83a42f1c70ff57bfb8d1d63a679c9/raw/b9a9a75f69bb4ad4d45fd96a8c58d2c269ae2c5f/manifest.json">
+ <meta name="mobile-web-app-capable" content="yes">
+ <meta name="apple-mobile-web-app-capable" content="yes">
+ <meta name="application-name" content="WP">
+ <meta name="apple-mobile-web-app-title" content="WP">
+ <meta name="theme-color" content="#00B5AD">
+ <meta name="msapplication-navbutton-color" content="#00B5AD">
+ <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+ <meta name="msapplication-starturl" content="/">
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+ <link rel="icon" type="image/png" sizes="192x192" href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/rounded-glossy-black-icons-alphanumeric/074137-rounded-glossy-black-icon-alphanumeric-letter-w.png">
+ <link rel="icon" type="image/png" sizes="144x144" href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/rounded-glossy-black-icons-alphanumeric/074137-rounded-glossy-black-icon-alphanumeric-letter-w.png">
+ <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/rounded-glossy-black-icons-alphanumeric/074137-rounded-glossy-black-icon-alphanumeric-letter-w.png">
+
+ <script src="https://cdn.rawgit.com/GoogleChrome/samples/gh-pages/service-worker/custom-offline-page/service-worker.js"></script>
+
+
+
+
+
+<style id="jsbin-css">
+/*Custom*/
+ @font-face {
+    font-family: NovaSoft;
+    src: url('https://cdn.rawgit.com/GordyD/rethinkdb-pres/bbec0b1d/fonts/proxima-nova-soft-normal-webfont.ttf?raw=true');
+}
+
+.hidden{
+ display:none !important;
+}
+
+.toc.item {
+ min-height: 20px
+}
+
+.web-title-container{
+ background-color: white;
+}
+.web-title{
+     margin-left: calc(50vw - 3em);
+    font-family: NovaSoft;
+    font-size: 1.5em;
+    color: #777;
+} 
+
+.pusher {
+    background-color: #f6f6f6 !important ;
+ padding-bottom: 10em !important;
+}
+
+.footer{
+ padding:1em;
+ text-align: center;
+}
+.footer > a{
+ color: #777;
+}
+.footer-wp{
+ padding:1rem 1rem 0 1rem;
+ margin:1rem 1rem -0.2rem 1rem;
+ text-align: center;
+ color: #aaa;
+}
+.footer-wp > a{
+ color: #aaa;
+}
+
+
+
+.ui.header.title {
+ font-weight: 300;
+ font-size: 1.5em;
+ margin: 0.5em;
+}
+.image.promo > .text {
+ background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+ color: white;
+ padding: 1em 1em 1em 1em;
+ position: absolute;
+ margin-top: -8.5em;
+}
+.image.promo > .text > .subtitle {
+ margin-top: -2.1em;
+ padding-left: 3.2em;
+}
+.image.promo > .text > .title {
+ font-size: 1.5em;
+}
+
+.image.promo .icon {
+ margin-top: .5em;
+}
+
+.bottom-items{
+ position: absolute !important;
+    bottom: 0;
+    left: 0;
+ width:100%;
+}
+
+.segment.winners{
+    background-color: #f6f6f6 !important;
+    margin-bottom: 0;
+ margin-top: 0;
+}
+
+.ui.header.promo-title{
+     margin: 0;
+    padding: 1rem;
+    margin-top: 1rem;
+ background-color: white !important; 
+}
+
+/*Share buttons*/
+
+.fb-messenger {
+ /*Facebook Messenger icon by Icons8 */
+ 
+ background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjAiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiNmZmZmZmYiID4gICAgPHBhdGggZD0iTSAxMiAyIEMgNi41MTg1NzI5IDIgMiA2LjIzMzc4MDEgMiAxMS41IEMgMiAxNC4xMjU1MjIgMy4xOTgyNDgyIDE2LjQ0NTUzNSA1IDE4LjE1NjI1IEwgNSAyMSBMIDUgMjIuNjI1IEwgNi40Mzc1IDIxLjkwNjI1IEwgOS4xODc1IDIwLjUzMTI1IEMgMTAuMDg3MjkyIDIwLjc4Njg4NyAxMS4wMDY4OTIgMjEgMTIgMjEgQyAxNy40ODE0MjcgMjEgMjIgMTYuNzY2MjIgMjIgMTEuNSBDIDIyIDYuMjMzNzgwMSAxNy40ODE0MjcgMiAxMiAyIHogTSAxMiA0IEMgMTYuNDYwNTczIDQgMjAgNy4zNzgyMTk5IDIwIDExLjUgQyAyMCAxNS42MjE3OCAxNi40NjA1NzMgMTkgMTIgMTkgQyAxMS4wNTgyNjggMTkgMTAuMTYwMDgyIDE4Ljg0NTkyNyA5LjMxMjUgMTguNTYyNSBMIDguOTA2MjUgMTguNDM3NSBMIDguNTMxMjUgMTguNjI1IEwgNyAxOS4zNzUgTCA3IDE3LjgxMjUgTCA3IDE3LjM3NSBMIDYuNjU2MjUgMTcuMDYyNSBDIDUuMDIzNjgzOCAxNS42Nzk2NjIgNCAxMy43MDU1OTQgNCAxMS41IEMgNCA3LjM3ODIxOTkgNy41Mzk0MjcxIDQgMTIgNCB6IE0gMTEuMDYyNSA5LjAzMTI1IEwgNi4xNTYyNSAxNC4yMTg3NSBMIDEwLjU2MjUgMTEuNzUgTCAxMi45Mzc1IDE0LjI4MTI1IEwgMTcuNzgxMjUgOS4wMzEyNSBMIDEzLjQ2ODc1IDExLjQzNzUgTCAxMS4wNjI1IDkuMDMxMjUgeiI+PC9wYXRoPjwvc3ZnPg==') 50% 50% no-repeat;
+ background-size: 100%;
+ width: 18px !important;
+ height: 18px !important;
+}
+.icon.fb-messenger {
+ display: inline-block;
+ margin: -1em 0.5em -0.1em -0.15em !important;
+}
+.messenger.button {
+ background-color: #448aff;
+ color: white;
+ margin-top:0.5em;
+}
+.messenger.button:hover,
+.messenger.button:focus {
+ background-color: #347aef;
+ color: white;
+}
+.messenger.button:active {
+ background-color: #246adf;
+ color: white;
+}
+/*Winners custom style*/
+
+.avatar.circular.image {
+ width: 3.5em;
+ margin: 0.2em 0.3em 0.2em 0.2em;
+}
+.label.middle {
+ margin: 10px 0 !important;
+}
+/*Google Maps + StreetView container*/
+
+#map,
+#pano {
+ /*float: left;*/
+ 
+ height: 202px;
+ width: 100%;
+ margin-bottom: 10px
+}
+.container-map {
+ height: 100%;
+ width: 100%;
+}
+#collapseThree {
+ height: 400px;
+}
+.address {
+ margin-top: -35px;
+}
+.right-icon {
+ float: right;
+}
+/*iOS Sidebars fix*/
+
+html.ios {
+ overflow-x: hidden;
+ -webkit-overflow-scrolling: touch;
+}
+html.ios,
+html.ios body {
+ height: initial !important;
+}
+
+/*Fixed bottom panel*/
+.ui.sticky.fixed.bottom {
+     width: 100% !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    left: 0px;
+    right: auto;
+    bottom: 0px;
+    box-shadow: 0 1px 5px 0px black;
+    border-radius: 5px;
+}
+
+
+.remaining-time > p {
+ margin-bottom: 0 !important;
+}
+.my-points > p {
+ margin-bottom: 0 !important;
+}
+
+
+.ui.sticky.fixed.bottom > .ui.segment{
+     padding: 0.5em;
+}
+.ui.friends-info{
+ padding:0;
+}
+
+.seven.wide.column{
+ padding-left: 0 !important;
+}
+.nine.wide.column .divider{
+     margin-left: 1em !important;
+} 
+.nine.wide.column{
+ padding-left: 0 !important;
+ padding-right: 0 !important;
+}
+
+.angle.up.icon.link{
+ margin-left:0.5em !important;
+ margin-right:-2em !important;
+}
+
+.seven.wide.column >button{
+ margin-top:0.2em !important;
+}
+
+.ui.divider.top-divider{
+ margin-top:-0.2em;
+  margin-bottom:-0.3em;
+    margin-left: -1em ;
+    margin-right: -1em; 
+  border-top: 1px solid rgba(34, 36, 38, 0.06) !important;
+   
+}
+.ui.divider.middle-divider{
+     margin-left: -1em;
+    margin-right: -1em; 
+    border-top: 3px solid rgba(34, 36, 38, 0.10) !important;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.07) !important;
+}
+.ui.divider.info-divider{
+ margin: 0.2em;
+    border-top: 1px dashed rgba(34, 36, 38, 0.10) !important;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.07) !important;
+
+}
+.ui.divider.bottom-divider{
+  margin-bottom:0em  !important;
+    margin-left: -3em !important;
+    margin-right: -3em !important; 
+  border-top: 1px solid rgba(34, 36, 38, 0.04) !important;
+
+}
+.ui.sticky .wide.column{
+ margin-top:-1.2em !important;
+ padding-top:0em !important;
+ margin-bottom:-1.3em  !important;
+ 
+}
+
+.ui.sticky .ui.middle.aligned.grid{
+ margin-top: 0rem;
+}
+
+
+
+@media only screen and (max-width: 700px) {}
+
+/*Custom scrollbar*/
+html::-webkit-scrollbar {
+      width: 8px;
+}
+html::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+      -webkit-border-radius: 4px;
+      border-radius: 4px;
+}
+html::-webkit-scrollbar-thumb {
+      -webkit-border-radius: 4px;
+      border-radius: 4px;
+      background: rgba(190, 190, 190, 0.7);
+      -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.3);
+}
+html::-webkit-scrollbar-thumb:window-inactive {
+      background: rgba(190, 190, 190, 0.1);
+}
+</style>
+</head>
+
+<body>
+
+
+ <!--Sidebar Menu-->
+ <div class="ui left vertical right menu sidebar">
+  <a class="item promotions">
+   <i class="marker icon"></i> Promociones de mi zona
+  </a>
+  <a class="item profile">
+   <i class="user icon"></i> Mi perfil
+  </a>
+  <a class="item settings">
+   <i class="setting icon"></i> Configuración
+  </a>
+ 
+  <div class="bottom-items">
+    <a class="item faq ">
+   <i class="question sign icon"></i> Preguntas frecuentes
+  </a>
+    <a class="item report">
+   <i class="warning sign icon"></i> Reportar promoción
+  </a>
+  
+  </div>
+  
+ </div>
+ <!--end Sidebar Menu-->
+
+ <!-- Page Contents-->
+ <div class="pusher">
+
+  <!--Modal Login-->
+  <div class="ui modal login">
+   <div class="content">
+
+    <div class="ui form">
+     <!--Social Buttons Login-->
+     <div class="field">
+      <label>Acceder con: </label>
+      <div class="ui column centered grid">
+       <div class=" column centered row">
+        <button class="ui facebook button" id="facebook-login">
+         <i class="facebook icon"></i> Facebook
+        </button>
+        <button class="ui google plus button" id="google-login">
+         <i class="google plus icon"></i> Google
+        </button>
+       </div>
+      </div>
+     </div>
+     <div class="ui horizontal divider">
+      o con mi ...
+     </div>
+     <!--Email and mobile input form-->
+     <div class=" field">
+      <label>Móvil o Correo electrónico:</label>
+      <div class="ui left icon input">
+       <i class="user icon"></i>
+       <input type="text" placeholder="micuenta@dominio.com">
+      </div>
+     </div>
+     <div class=" inline field">
+      <div class="ui checkbox">
+       <input type="checkbox" tabindex="0" class="hidden">
+       <label>Acepto los términos y condiciones</label>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!--end Modal Login-->
+
+    <!--Modal Report-->
+  <div class="ui modal report">
+   <i class="close icon"></i>
+   <div class="header">
+    Reportar promoción
+   </div>
+   <div class="content">
+
+    <div class="ui form">
+     <!--Social Buttons Login-->
+     <div class="field">
+      <label>Comentarios</label>
+      
+     <div class="ui left icon input">
+<textarea name="" id="" cols="30" rows="7"></textarea>
+      </div>
+     </div>
+     <div class="ui column centered grid">
+       <div class=" column centered row">
+        <button class="ui basic button">
+         <i class="send icon"></i> Enviar
+        </button>
+       </div>
+      </div>
+     
+    </div>
+   </div>
+  </div>
+  <!--end Modal Report-->
+  
+   <!--Modal Settings-->
+  <div class="ui modal settings">
+ <i class="close icon"></i>
+   <div class="header">
+    Configuración del perfil
+   </div>
+   <div class="content">
+
+    <form class="ui form">
+    
+
+     <div class=" field">
+      <label><i class="map icon"></i>Código postal</label>
+      <div class="field">
+       <select class="ui search dropdown zipcodes">
+
+        <!-- <option value="{{value}}">{{title}}</option>             -->
+
+
+       </select>
+      </div>
+     </div>
+
+     <div class="field">
+      <label><i class="heart icon"></i>Promociones que me interesan</label>
+      <div class="field">
+
+       <select class="ui fluid search dropdown" multiple="">
+        <option value="">Mis intereses</option>
+        <option value="angular">Angular</option>
+        <option value="css">CSS</option>
+
+       </select>
+      </div>
+     </div>
+
+
+     <div class="inline field">
+      <div class="ui slider checkbox">
+       <input type="checkbox" tabindex="0" class="hidden">
+       <label>Notificaciones Push</label>
+      </div>
+     </div>
+
+    </form>
+   </div>
+  </div>
+  <!--end Modal Settings-->
+  
+  <!--Modal Profile-->
+  <div class="ui modal profile">
+   <i class="close icon"></i>
+   <div class="header">
+    Mi perfil
+   </div>
+   <div class="content">
+
+    <form class="ui form">
+
+     <div class="field">
+      <label><i class="user icon"></i>Nombre y apellidos</label>
+      <div class="two fields">
+       <div class="field">
+        <input type="text" name="shipping[first-name]" placeholder="Nombre">
+       </div>
+       <div class="field">
+        <input type="text" name="shipping[last-name]" placeholder="Apellidos">
+       </div>
+      </div>
+     </div>
+
+     <div class="field">
+      <div class="three fields">
+       <div class="field">
+        <label><i class="mail icon"></i>Correo electrónico</label>
+        <input type="text" name="" placeholder="micuenta@dominio.com">
+       </div>
+
+       <div class="field">
+        <label><i class="call icon"></i>Teléfono móvil</label>
+        <input type="text" name="" placeholder="600100200">
+       </div>
+       
+       <div class="field">
+        <label><i class="lock icon"></i>Contraseña</label>
+        <input type="password" name="" placeholder="********">
+       </div>
+      </div>
+     </div>
+
+
+
+    </form>
+   </div>
+  </div>
+  <!--end Modal Profile-->
+  
+  <!-- Modal Share Promo-->
+  <div class="ui modal share">
+   <i class="close icon"></i>
+   <div class="header">
+    Compartir con
+   </div>
+   <div class="content">
+
+      <div class="ui column centered grid">
+       <div class="ten wide column centered row">
+    <button class="ui big whatsapp green button">
+     <i class=" whatsapp icon"></i> Whatsapp
+    </button>
+
+    <button class="ui big messenger button">
+     <i class="fb-messenger icon "></i> Messenger
+    </button>
+   </div>
+       </div>
+    
+     <p class="ui tiny header grey">Comparte con tus familiares y amigos. 
+    <br>Animalos a participar para conseguir más puntos.</p>
+   
+  </div>
+  </div>
+  <!--end Modal Share Promo->
+
+
+  <!--Menu handler icon (mobile)-->
+  <div class="ui vertical segment web-title-container">
+   <div class="toc item">
+    <span class="web-title">WhatsPromo</span><i class="right-icon large sidebar icon"></i>
+   </div>
+
+
+  </div>
+  <!--Promotion image-->
+  <div class="image promo container">
+   <!-- <img class="ui fluid image" src="http://semantic-ui.com/images/wireframe/image.png">-->
+
+   <img class="ui fluid image promo" src="https://images.unsplash.com/photo-1418225043143-90858d2301b4?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=4801291798afca8b66391084f87d24f7" alt="">
+   <div class="text">
+    <h2 class="title"> <i class=" large hourglass empty icon"></i> La promoción ha finalizado </h2>
+    <p class="subtitle">Comprueba si has sido premiado</p>
+   </div>
+  </div>
+
+  <!--Promotion title-->
+  <h1 class="ui header title promo-title">Este es el título de una promoción de ejemplo. Pronto podrás visualizar tu promoción mientras la editas, aquí mismo.</h1>
+
+
+
+  <!--Winners-->
+  <div class="ui basic segment winners">
+   <div class="ui   segment">
+
+
+    <div class="ui middle aligned divided list  ">
+     <h3 class="ui header"><i class="gift icon"></i>Ganadores del sorteo (contactar con los premiados)</h3>
+
+
+     <div class="item">
+      <div class=" content">
+       <div class="ui label right floated middle">
+        <i class="yellow star icon"></i>300 puntos
+       </div>
+       <i class="circular large user  icon"></i> Patricia Nieto
+      </div>
+     </div>
+
+     <div class="item">
+      <div class=" content">
+       <div class="ui label right floated  middle">
+        <i class="yellow star icon"></i>300 puntos
+       </div>
+       <img class="ui mini avatar circular image" src="http://semantic-ui.com/images/avatar2/small/molly.png"> Patricia Nieto
+      </div>
+     </div>
+
+
+
+     <div class="item">
+      <div class=" content">
+       <div class="ui label right floated middle">
+        <i class="yellow star icon"></i>300 puntos
+       </div>
+       <i class="circular large user  icon"></i> Patricia Nieto
+      </div>
+     </div>
+
+    </div>
+   </div>
+  </div>
+  <!-- end Winners-->
+
+
+
+
+
+
+  <!--Promotion information accordion-->
+  <div class="ui styled fluid accordion">
+
+   <div class="title active">
+    <i class="dropdown icon"></i>Descripción <i class="right-icon tags icon"></i>
+   </div>
+   <div class="content active">
+    <h5 class="ui header transition visible">¿Que ofrecemos?</h5>
+
+
+  
+    <p class="transition visible">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.</p>
+    <h5 class="ui header transition visible">¿Quién y dónde?</h5>
+    <p class="transition visible">Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+    </p>
+    <h5 class="ui header transition visible">Sobre nosotros</h5>
+    <p class="transition visible">Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
+
+   </div>
+
+
+
+   <div class="title ">
+    <i class="dropdown icon"></i>Condiciones <i class="right-icon legal icon"></i>
+   </div>
+   <div class="content ">
+    <p class="transition hidden" style="display: block !important;">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put
+     a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+     raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
+   </div>
+
+
+   <div class="title">
+    <i class="dropdown icon"></i>Localización <i class="right-icon map icon"></i>
+   </div>
+   <div class="content">
+    <p class="transition hidden"> <strong>Dirección: </strong>
+     <span>Calle Dolores Marqués, 4, 46020 Valencia (Valencia), España</span>
+    </p>
+
+    <div class="container-map">
+     <div id="map"></div>
+     <div id="pano"></div>
+    </div>
+
+   </div>
+   <div class="title">
+    <i class="dropdown icon"></i>Contacto <i class="right-icon info icon"></i>
+   </div>
+   <div class="content">
+    <h5 class="ui header transition hidden">Teléfono de contacto:</h5>
+    <p class="transition hidden">
+     <a href="tel:+34 630990088">+34 630 990 088</a>
+    </p>
+    <h5 class="ui header transition hidden">Página web:</h5>
+    <p class="transition hidden">
+     <a href="http://www.whatspromo.com" target="_blank">whatspromo.com</a>
+    </p>
+    <h5 class="ui header transition hidden">Empresa:</h5>
+    <p class="transition hidden">Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
+
+   </div>
+  </div>
+<!--Footer-->
+<p class="footer"><a href="" class="">Crear mi propia promoción ahora <i class="edit icon"></i></a></p>
+<p class="footer-wp"><a href="" class="">© WhatsPromo 2017</a> · <a href="" class="">Condiciones legales</a></p>
+<!--end footer-->
+
+  <div class="ui sticky fixed bottom ">
+
+
+   <div class="ui segment">
+
+    <div class="ui items">
+     <div class="item">
+
+      <div class="content">
+       <div class="collapsable-content" style="display:none;">
+        <i class=" large angle down left floated icon link expanded"></i>
+
+        <p class="ui small header">Puntos obtenidos con mis amigos</p>
+         <div class="ui divider top-divider"></div>
+        <div class="ui center aligned basic segment friends-info">
+         <p><i class="users icon"></i><strong>30</strong> participando <strong>x10</strong> =<i class="yellow star  icon"></i>300 puntos</p>
+         <p><i class="unhide icon"></i><strong>200</strong> visualizaciones <strong>x1</strong> =<i class="yellow star  icon"></i>200 puntos</p>
+        </div>
+
+        <div class="ui divider middle-divider" ></div>
+       </div>
+       <div class="ui middle aligned grid ">
+        <div class="nine wide column">
+          <div class="participation-info ui center aligned basic segment">
+
+          <div class="remaining-time">
+           <p class="time">
+            <i class="hourglass half icon"></i>
+            <strong>
+           <span>134h</span> <span>20m</span> <span>14s</span>
+          </strong>
+           </p>
+           <p class="time-label">Tiempo restante</p>
+          </div>
+
+          <div class="ui divider info-divider"></div>
+        <i class=" large angle up left floated icon link "></i>
+          
+          <div class="my-points">
+           <p class="points">
+            <i class="yellow star middle aligned icon"></i>
+            <strong>1210</strong>
+           </p>
+           <p class="points-label">Puntos acumulados</p>
+          </div>
+         </div>
+        </div>
+
+
+        <div class="seven wide column">
+         
+         <button class="hidden green large right floated  ui button">
+          <i class="heart icon"></i>Participar
+         </button>
+
+         <button class=" green large right floated  ui button">
+          <div><i class="small star icon"></i>Conseguir
+           <br> más puntos </div>
+         </button>
+
+        </div>
+       </div>
+
+       <div class="extra">
+         <div class="ui divider bottom-divider"></div>
+
+        <i class="info icon"></i> Los otros participantes tienen ~ 300 puntos.
+       </div>
+
+
+      </div>
+
+     </div>
+    </div>
+   </div>
+  </div>
+
+
+ </div><!--end pusher-->
+ <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0akxjOL8saFe7CIYI-B3ezDut3Ohh7As&signed_in=true&callback=initialize"></script>
+
+ <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
+ </script>
+
+<script id="jsbin-javascript">
+/*Fixed menu open-close*/
+$('.ui.sticky.fixed.bottom').click(function() {
+ $('.angle.up.icon.link').toggle();
+ $('.collapsable-content').transition('fade up');
+});
+
+
+/*Google Maps + StreetView*/
+function initialize() {
+ var coor = {
+  lat: 39.4851826,
+  lng: -0.3634006
+ };
+ var map = new google.maps.Map(document.getElementById('map'), {
+  center: coor,
+  zoom: 17
+ });
+ var panorama = new google.maps.StreetViewPanorama(
+  document.getElementById('pano'), {
+   position: coor,
+   pov: {
+    heading: 34,
+    pitch: 10
+   }
+  });
+ map.setStreetView(panorama);
+}
+
+/*Geolocalization button*/
+function geoFindMe() {
+ var output = document.getElementById("out");
+
+ if (!navigator.geolocation) {
+  output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+  return;
+ }
+
+ //On geo. success handler
+ function successGeoLocHandler(position) {
+  var latitude = position.coords.latitude;
+  var longitude = position.coords.longitude;
+
+  output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+
+  var img = new Image();
+  img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+
+  output.appendChild(img);
+ }
+
+ //On geo. error handler
+ function errorGeoLocHandler() {
+  output.innerHTML = "Unable to retrieve your location";
+ }
+
+ output.innerHTML = "<p>Locating…</p>";
+ navigator.geolocation.getCurrentPosition(successGeoLocHandler, errorGeoLocHandler);
+}
+
+
+/*Facebook Login*/
+window.fbAsyncInit = function() {
+ FB.init({
+  appId: '1485419298444998',
+  cookie: true, // enable cookies to allow the server to access the session
+  xfbml: true, // parse social plugins on this page
+  version: 'v2.8' // use graph api version 2.8
+ });
+
+ // Now that we've initialized the JavaScript SDK, we call 
+ // FB.getLoginStatus().  This function gets the state of the
+ // person visiting this page and can return one of three states to
+ // the callback you provide.  They can be:
+ //
+ // 1. Logged into your app ('connected')
+ // 2. Logged into Facebook, but not your app ('not_authorized')
+ // 3. Not logged into Facebook and can't tell if they are logged into
+ //    your app or not.
+ //
+ // These three cases are handled in the callback function.
+
+ FB.getLoginStatus(function(response) {
+  statusChangeCallback(response);
+ });
+};
+
+// Load the SDK asynchronously
+(function(d, s, id) {
+ var js, fjs = d.getElementsByTagName(s)[0];
+ if (d.getElementById(id)) return;
+ js = d.createElement(s);
+ js.id = id;
+ js.src = "//connect.facebook.net/es_ES/sdk.js";
+ fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+// Here we run a very simple test of the Graph API after login is
+// successful.  See statusChangeCallback() for when this call is made.
+function testAPI() {
+ console.log('Welcome!  Fetching your information.... ');
+ FB.api('/me?fields=id,name,email,permissions', function(response) {
+
+  if (response.permissions.data[1].status === 'declined') {
+
+   document.getElementById('status').innerHTML = 'We also need your email.<button onClick="javasript:reAskForEmail()">GIVE MY EMAIL</button>';
+
+  } else {
+   console.log('Successful login for: ' + response.name);
+   document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '! Your email is: ' + response.email;
+  }
+ });
+}
+
+function loginBtn() {
+ FB.login(function(response) {
+  statusChangeCallback(response);
+ }, {
+  scope: 'email,public_profile'
+ });
+}
+
+// This is called with the results from from FB.getLoginStatus().
+function statusChangeCallback(response) {
+ console.log('statusChangeCallback');
+ console.log(response);
+ // The response object is returned with a status field that lets the
+ // app know the current login status of the person.
+ // Full docs on the response object can be found in the documentation
+ // for FB.getLoginStatus().
+ if (response.status === 'connected') {
+  // Logged into your app and Facebook.
+  testAPI();
+ } else if (response.status === 'not_authorized') {
+  // The person is logged into Facebook, but not your app.
+  document.getElementById('status').innerHTML = 'Please log into this app nnn.';
+ } else {
+  // The person is not logged into Facebook, so we're not sure if
+  // they are logged into this app or not.
+  document.getElementById('status').innerHTML = 'Please log into Facebook ccc.';
+ }
+}
+
+// Ask one more time about the email if the user has unchecked it before
+function reAskForEmail() {
+ FB.login(function(response) {
+  console.log('Rerequest succesful')
+  statusChangeCallback(response);
+ }, {
+  scope: 'email,public_profile',
+  return_scopes: true,
+  auth_type: 'rerequest'
+ });
+}
+
+
+
+/*Google Login*/
+
+// Enter an API key from the Google API Console:
+//   https://console.developers.google.com/apis/credentials
+var apiKey = 'AIzaSyD0Zii_g_wXuaIrIHW5xv62fTFrfPc0bPY';
+
+// Enter the API Discovery Docs that describes the APIs you want to
+// access. In this example, we are accessing the People API, so we load
+// Discovery Doc found here: https://developers.google.com/people/api/rest/
+var discoveryDocs = ["https://people.googleapis.com/$discovery/rest?version=v1"];
+
+// Enter a client ID for a web application from the Google API Console:
+//   https://console.developers.google.com/apis/credentials?project=_s
+// In your API Console project, add a JavaScript origin that corresponds
+//   to the domain where you will be running the script.
+var clientId = '208662593023-osoiommdi22b0m7ejdugt18if7iggt9e.apps.googleusercontent.com';
+
+// Enter one or more authorization scopes. Refer to the documentation for
+// the API or https://developers.google.com/people/v1/how-tos/authorizing
+// for details.
+var scopes = 'profile';
+var authorizeButton = document.getElementById('google-login');
+// var signoutButton = document.getElementById('signout-button');
+function handleClientLoad() {
+ // Load the API client and auth2 library
+ gapi.load('client:auth2', initClient);
+}
+
+function initClient() {
+ gapi.client.init({
+  apiKey: apiKey,
+  discoveryDocs: discoveryDocs,
+  clientId: clientId,
+  scope: scopes
+ }).then(function() {
+  // Listen for sign-in state changes.
+  gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+  // Handle the initial sign-in state.
+  updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+  authorizeButton.onclick = handleAuthClick;
+  // signoutButton.onclick = handleSignoutClick;
+ });
+}
+
+function updateSigninStatus(isSignedIn) {
+ if (isSignedIn) {
+  // authorizeButton.style.display = 'none';
+  // signoutButton.style.display = 'block';
+  makeApiCall();
+ } else {
+  authorizeButton.style.display = 'block';
+  // signoutButton.style.display = 'none';
+ }
+}
+
+function handleAuthClick(event) {
+ console.log("login handle" + event);
+ gapi.auth2.getAuthInstance().signIn();
+}
+
+//function handleSignoutClick(event) {
+//  gapi.auth2.getAuthInstance().signOut();
+// }
+
+// Load the API and make an API call.  Display the results on the screen.
+function makeApiCall() {
+ gapi.client.people.people.get({
+  resourceName: 'people/me'
+ }).then(function(resp) {
+  var name = resp.result.names[0].displayName;
+  var email = resp.result.emailAddresses[0].value;
+  var profileImage = resp.result.photos[0].url;
+  var p = document.createElement('p');
+  p.appendChild(document.createTextNode('Hello, ' + name + '! Your email is: ' + email));
+  document.getElementById('content').appendChild(p);
+ });
+}
+
+
+
+/*Handlebars TEST ****************************************************/
+var zipcodes = {
+ zipcodes: [{
+  value: "1331",
+  title: "This is my first post!"
+ }, {
+  value: "as",
+  title: "first post!"
+ }, {
+  value: "cca",
+  title: "post!"
+ }]
+};
+
+var source = $("#entry-template").html();
+
+var template = Handlebars.compile( /*source*/ '{{#each zipcodes}}<option value="{{value}}">{{title}}</option>{{/each}}');
+
+var htmlX = template(zipcodes);
+/****************************************************/
+
+$(document).ready(function() {
+
+
+ /*jQuery selectors triggerers*/
+ $('.geoloc-button').click(geoFindMe);
+ $('#facebook-login').click(loginBtn);
+
+
+ /*end of jQuery selectors triggerers*/
+
+ /*Share buttons*/
+ $('.whatsapp.button').click(function() {
+  window.location = 'whatsapp://send?text=Esto es un mensaje de ejemplo para Whatsapp whatspromo.com/cocacola';
+ });
+ $('.messenger.button').click(function() {
+  var link = "whatspromo.com/cocacola";
+  var app_id = '1485419298444998';
+  window.location = 'fb-messenger://share?link=' + encodeURIComponent(link) + '&app_id=' + encodeURIComponent(app_id);
+ });
+
+ /*Accordion Menu*/
+ $('.ui.accordion').accordion();
+
+ $('#accordion .panel-heading').click(function() {
+  var elements = $('#accordion .panel-heading');
+  if (!$(this).hasClass('opened')) {
+   elements.removeClass('opened');
+  }
+  $(this).toggleClass('opened');
+
+ });
+
+
+ /*Sidebar Menu*/
+ // create sidebar and attach to open menu
+ $('.ui.sidebar').sidebar('attach events', '.toc.item');
+ $('.ui.sidebar').sidebar('setting', {
+  dimPage: true,
+ })
+
+
+ /*Login modal*/
+ $('.modal.login').modal('attach events', '.button.login', 'show');
+
+ /*Profile modal*/
+ $('.modal.profile').modal('attach events', '.item.profile', 'show');
+
+ /*Settings modal*/
+ $('.modal.settings').modal('attach events', '.item.settings', 'show');
+
+ /*Report modal*/
+ $('.modal.report').modal('attach events', '.item.report', 'show');
+
+ /*Share promo modal*/
+ $('.modal.share').modal('attach events', '.button.share', 'show');
+
+ $('XX.modal.login')
+  .modal({
+   closable: false,
+   onDeny: function() {
+    window.alert('Wait not yet!');
+    return false;
+   },
+   onApprove: function() {
+    window.alert('Approved!');
+   }
+  });
+
+ /*Checkbox input*/
+ $('.ui.checkbox').checkbox();
+
+ /*ZipCodes dropdown (needs a querified API passing /{query})*/
+ //$('.ui.dropdown').dropdown({
+ // apiSettings: {
+ //  url: 'https://gist.githubusercontent.com/dacripo/a48e408d1eca3187c983da04b0edf313/raw/1187038ad1f4a8d92023b5e63aaad2bf640c6a01/zipcodes-spain.json?q={query}',
+ //  saveRemoteData: false
+ // }
+ // });
+
+
+
+});
+</script>
+</body>
+
+</html>
