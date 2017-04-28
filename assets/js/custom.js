@@ -1,3 +1,5 @@
+
+
 $("input[name='socialImageSRC']").change(function () {
   console.log('Promo image choosed');
 
@@ -328,9 +330,9 @@ $(document).ready(function () {
 
         $("textarea[name='promoTitle']").val(promotion.promoTitle);
 
-        $(".promo-image-popup img").attr("src", 'https://'+promotion.promoImage);
+        $(".promo-image-popup img").attr("src", 'https://' + promotion.promoImage);
 
-        $(".social-image-popup img").attr("src", 'https://'+promotion.socialImage);
+        $(".social-image-popup img").attr("src", 'https://' + promotion.socialImage);
 
         $("textarea[name='promoDescription']").summernote('code', promotion.promoDescription);
         $("textarea[name='promoLegalCond']").summernote('code', promotion.promoLegalCond);
@@ -348,13 +350,13 @@ $(document).ready(function () {
         $("input[name='promoId']").val(promotion.promoId);  //promotion URL
         $("input[name='promoId']").prop("disabled", true);  //promotion URL
 
-        $("input[name='shareMessages']").val(promotion.shareMessages);  
+        $("input[name='shareMessages']").val(promotion.shareMessages);
 
         $('#rangestart').calendar('set date', new Date(promotion.startDate), true, false);
         $('#rangeend').calendar('set date', new Date(promotion.endDate), true, false);
 
-         $('.startDateHidden').val(new Date(promotion.startDate));
-         $('.endDateHidden').val(new Date(promotion.endDate));
+        $('.startDateHidden').val(new Date(promotion.startDate));
+        $('.endDateHidden').val(new Date(promotion.endDate));
 
         $("input[name='winnersNumber']").val(promotion.winnersNumber);
         $("input[name='itemMeanPrice']").val(promotion.itemMeanPrice);
@@ -536,7 +538,86 @@ $(document).ready(function () {
 
 
 
-  /*Statistics - Chart.js*/
+  /*Statistics - Chart.js and General stats*/
+
+  $('.ui.dropdown.stats-date').dropdown({
+
+    onChange: function (date, text, $selectedItem) {
+      console.log(date);
+      var promoId = $(".ui.dropdown.stats-promotion").dropdown('get value');
+      getBarchartStats(promoId, date);
+
+    }
+  });
+
+  $('.ui.dropdown.stats-promotion').dropdown({
+
+    onChange: function (promoId, text, $selectedItem) {
+      console.log(promoId);
+      var date = $(".ui.dropdown.stats-date").dropdown('get value');
+      getBarchartStats(promoId, date);
+      getGeneralStats(promoId);
+    }
+  });
+
+  var getBarchartStats = function (promoId, date) {
+
+    $.ajax({
+      url: '/api/stats/barchart/' + promoId + '/' + date,
+      type: 'GET',
+      beforeSend: function () {
+        $('.loading').addClass('active');
+      },
+      success: function (barchartStats) {
+
+        //Render barchart
+        console.log(barchartStats);
+        barChart.data.datasets[0].data = barchartStats.friendVisualNumber;
+        barChart.data.datasets[1].data = barchartStats.friendParticNumber;
+        barChart.update(); // Calling update now animates the new values.
+
+        $('.loading').removeClass('active');
+      },
+      error: function () {
+        swal("Error al actualizar las estadísticas", "Lo sentimos, hubo un error al cargar el gráfico.", "error");
+        $('.loading').removeClass('active');
+      }
+    });
+
+  }
+
+  var getGeneralStats = function (promoId) {
+
+    $.ajax({
+      url: '/api/stats/general/' + promoId,
+      type: 'GET',
+      beforeSend: function () {
+        $('.loading').addClass('active');
+      },
+      success: function (generalStats) {
+
+        //Render general stats
+
+        console.log(generalStats)
+
+        $('.unique-visualizations-stats').html(generalStats.friendVisualNumber);
+        $('.participation-stats').html(generalStats.participantsNumber);
+        $('.points-stats').html(generalStats.points);
+        $('.winners-number-stats').html(generalStats.winnersNumber);
+
+
+        $('.loading').removeClass('active');
+      },
+      error: function () {
+        swal("Error al actualizar las estadísticas", "Lo sentimos, hubo un error al cargar los datos generales..", "error");
+        $('.loading').removeClass('active');
+      }
+    });
+
+  }
+
+
+
   Chart.defaults.global.responsive = true;
   Chart.defaults.global.maintainAspectRatio = false;
 
@@ -767,7 +848,7 @@ $(document).ready(function () {
 
   //Set today at first calendar
   $('#rangestart').calendar('set date', new Date(), true, false);
- $('.startDateHidden').val((new Date()).toISOString());
+  $('.startDateHidden').val((new Date()).toISOString());
 
   //Second calendar
   var endcalendar = {

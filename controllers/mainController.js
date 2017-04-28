@@ -290,7 +290,55 @@ module.exports = {
 
     },
 
+    /**
+     * mainController.barchartStats()
+     */
+    barchartStats: async function (req, res) {
+        var promoId = req.params.promoId;
+        var day = req.params.day;
+        var month = req.params.month;
+        var year = req.params.year;
 
+        try {
+            let response = await fetch('http://localhost:3000/stats/barchart/promotion/' + promoId+'/date/'+day+'/'+month+'/'+year, { method: 'GET' });
+            let data = await response.json();
+            if (response.status !== 200) {
+                return res.status(500).json({ response: response });
+            }
+            return res.status(200).json(data);
+
+        } catch (error) {
+            console.error('Fetch error when retrieving barchar stats');
+            console.error(error);
+            return res.status(500).json({
+                error: error
+            });
+        }
+
+    },
+        /**
+     * mainController.generalStats()
+     */
+    generalStats: async function (req, res) {
+        var promoId = req.params.promoId;
+
+        try {
+            let response = await fetch('http://localhost:3000/stats/general/promotion/' + promoId, { method: 'GET' });
+            let data = await response.json();
+            if (response.status !== 200) {
+                return res.status(500).json({ response: response });
+            }
+            return res.status(200).json(data);
+
+        } catch (error) {
+            console.error('Fetch error when retrieving general stats');
+            console.error(error);
+            return res.status(500).json({
+                error: error
+            });
+        }
+
+    },
     /**
      * mainController.showPromotion()
      */

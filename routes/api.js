@@ -8,7 +8,21 @@ var router = express.Router();
  * GET
  */
 
+router.get('/stats/barchart/:promoId/:day/:month/:year', mainController.barchartStats);
+
+/*
+ * GET
+ */
+
+router.get('/stats/general/:promoId', mainController.generalStats);
+
+
+/*
+ * GET
+ */
+
 router.get('/promotion/:promoId', mainController.showPromotion);
+
 
 
 /*
