@@ -11,7 +11,7 @@
         <a class="header">{{promoTitle}}</a>
 
         <div class="description">
-            <p>{{{trimString promoDescription 120}}}</p>
+            <p>{{{htmlToPlainText (trimString promoDescription 120)}}}...</p>
         </div>
         <div class="extra">
             <div class="meta">
