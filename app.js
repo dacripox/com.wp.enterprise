@@ -4,7 +4,8 @@ var app = express();
 var md5 = require('md5');
 var mainRoutes = require('./routes/index');
 var apiRoutes = require('./routes/api');
-var favicon = require('serve-favicon')
+var favicon = require('serve-favicon');
+var htmlToText = require('html-to-text');
 
 app.use(favicon(path.join(__dirname, 'assets/favicons', 'favicon.ico')))
 
@@ -51,6 +52,12 @@ hbs.registerHelper("not", function (obj) {
 
 hbs.registerHelper('trimString', function(passedString,endPos) {
     return passedString.substring(0,endPos);
+});
+hbs.registerHelper("htmlToPlainText", function (html) {
+  return htmlToText.fromString(html, {
+    ignoreHref: true,
+    uppercaseHeadings :false,
+  });
 });
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
