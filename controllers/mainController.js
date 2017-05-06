@@ -567,10 +567,10 @@ module.exports = {
         var promoId = req.params.promoId;
 
 
-        console.log('Finding winners for promotion: ' + promo_id);
+        console.log('Finding winners for promotion: ' + promoId);
         let formData = {};
         try {
-            let response = await request.get({ url: 'http://localhost:3000/winner/promotion/' + promo_id, form: formData });
+            let response = await request.get({ url: 'http://localhost:3000/winner/promotion/' + promoId, form: formData });
             res.status(200).json(response);
         } catch (error) {
             console.error('Fetch error winners. ');
@@ -590,10 +590,10 @@ module.exports = {
         var promoId = req.params.promoId;
 
 
-        console.log('Finding Participants for promotion: ' + promo_id);
+        console.log('Finding Participants for promotion: ' + promoId);
         let formData = {};
         try {
-            let response = await request.get({ url: 'http://localhost:3000/participation/promotion/' + promo_id +'/full', form: formData });
+            let response = await request.get({ url: 'http://localhost:3000/participation/promotion/' + promoId +'/full', form: formData });
             res.status(200).json(response);
         } catch (error) {
             console.error('Fetch error participations with full user details. ');
