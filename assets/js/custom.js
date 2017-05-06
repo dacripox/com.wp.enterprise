@@ -1,3 +1,14 @@
+
+
+
+//Header menu
+$(document).ready(function () {
+  // create sidebar and attach to menu open
+  $('.ui.sidebar').sidebar('attach events', '.toc.item');
+
+});
+
+
 $("input[name='socialImageSRC']").change(function () {
   console.log('Promo image choosed');
 
@@ -328,9 +339,9 @@ $(document).ready(function () {
 
         $("textarea[name='promoTitle']").val(promotion.promoTitle);
 
-        $(".promo-image-popup img").attr("src", 'https://'+promotion.promoImage);
+        $(".promo-image-popup img").attr("src", 'https://' + promotion.promoImage);
 
-        $(".social-image-popup img").attr("src", 'https://'+promotion.socialImage);
+        $(".social-image-popup img").attr("src", 'https://' + promotion.socialImage);
 
         $("textarea[name='promoDescription']").summernote('code', promotion.promoDescription);
         $("textarea[name='promoLegalCond']").summernote('code', promotion.promoLegalCond);
@@ -348,13 +359,13 @@ $(document).ready(function () {
         $("input[name='promoId']").val(promotion.promoId);  //promotion URL
         $("input[name='promoId']").prop("disabled", true);  //promotion URL
 
-        $("input[name='shareMessages']").val(promotion.shareMessages);  
+        $("input[name='shareMessages']").val(promotion.shareMessages);
 
         $('#rangestart').calendar('set date', new Date(promotion.startDate), true, false);
         $('#rangeend').calendar('set date', new Date(promotion.endDate), true, false);
 
-         $('.startDateHidden').val(new Date(promotion.startDate));
-         $('.endDateHidden').val(new Date(promotion.endDate));
+        $('.startDateHidden').val(new Date(promotion.startDate));
+        $('.endDateHidden').val(new Date(promotion.endDate));
 
         $("input[name='winnersNumber']").val(promotion.winnersNumber);
         $("input[name='itemMeanPrice']").val(promotion.itemMeanPrice);
@@ -396,13 +407,17 @@ $(document).ready(function () {
 
 
   /*Particiapants table (with DataTable)*/
-  $('#participants-table').DataTable({
-
+  var partTable = $('#participants-table').DataTable({
+    /*dom: 'Bfrtip',*/
+    lengthChange: false,
+    buttons: ['csv', 'excel', 'pdf'],
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json'
     }
-
   });
+
+  partTable.buttons().container()
+    .appendTo($('#participants-table_wrapper > div > div:nth-child(1) > div:nth-child(1)', partTable.table().container()));
 
   /*Promo url checker*/
   var timeOut;
@@ -536,7 +551,171 @@ $(document).ready(function () {
 
 
 
-  /*Statistics - Chart.js*/
+  /*Statistics - Chart.js and General stats*/
+  $('.statsPromo').click(function () {
+
+    var promoId = $(this).data('promoid');
+    console.log('statsPromo: ' + promoId);
+
+    $('.ui.dropdown.stats-promotion').dropdown('set selected', promoId);
+
+    showStatsPromo();
+
+  });
+
+  $('.ui.dropdown.stats-promotion').dropdown({
+
+    onChange: function (promoId, text, $selectedItem) {
+      console.log(promoId);
+
+      setDatesForPromotion(promoId);
+      setTimeout(function (params) {
+
+        var date = $(".ui.dropdown.stats-date").dropdown('get value');
+        getGeneralStats(promoId);
+        getBarchartStats(promoId, date);
+
+      }, 2500);
+
+      getWinners(promoId);
+      getParticipants(promoId);
+    }
+  });
+
+
+  function getWinners(promoId) {
+    var source = $("#winners-segment").html();
+    var template = Handlebars.compile(source);
+
+
+    $.ajax({
+      url: '/api/winners/' + promoId,
+      type: 'GET',
+      beforeSend: function () {
+        $('.loading').addClass('active');
+      },
+      success: function (winners) {
+        var context = { winners: winners };
+        var html = template(context);
+      },
+      error: function () {
+        swal("Error al actualizar los ganadores", "Lo sentimos, hubo un error al cargar los ganadores para la promoción.", "error");
+      }
+    });
+
+
+  }
+
+  function getParticipants(promoId) {
+
+  }
+
+
+
+
+  $('.ui.dropdown.stats-date').dropdown({
+
+    onChange: function (date, text, $selectedItem) {
+      console.log(date);
+      var promoId = $(".ui.dropdown.stats-promotion").dropdown('get value');
+
+      getBarchartStats(promoId, date);
+
+    }
+  });
+
+
+  var setDatesForPromotion = function (promoId) {
+
+    $.ajax({
+      url: '/api/stats/dates/promotion/' + promoId,
+      type: 'GET',
+      beforeSend: function () {
+        $('.loading').addClass('active');
+      },
+      success: function (dates) {
+        var lastDate = "";
+        var htmlDates = new Array();
+        for (var i = 0; i < dates.length; i++) {
+          var date = new Date(dates[i]);
+
+          var day = date.getDate();
+          var month = date.getMonth() + 1;
+          var year = date.getFullYear();
+          var htmlDate = day + '/' + month + '/' + year;
+
+          htmlDates.push('<div class="item" data-value="' + htmlDate + '">' + htmlDate + '</div>');
+          lastDate = htmlDate;
+        }
+        $(".ui.dropdown.stats-date").find('.menu').html(htmlDates);
+        $(".ui.dropdown.stats-date").dropdown('set selected', lastDate);
+      },
+      error: function () {
+        swal("Error al actualizar las estadísticas", "Lo sentimos, hubo un error al cargar las fechas de las estadísticas.", "error");
+      }
+    });
+
+  }
+
+
+  var getBarchartStats = function (promoId, date) {
+
+    $.ajax({
+      url: '/api/stats/barchart/' + promoId + '/' + date,
+      type: 'GET',
+      beforeSend: function () {
+        $('.loading').addClass('active');
+      },
+      success: function (barchartStats) {
+
+        //Render barchart
+        console.log(barchartStats);
+        barChart.data.datasets[0].data = barchartStats.friendVisualNumber;
+        barChart.data.datasets[1].data = barchartStats.friendParticNumber;
+        barChart.update(); // Calling update now animates the new values.
+
+        $('.loading').removeClass('active');
+      },
+      error: function () {
+        swal("Error al actualizar las estadísticas", "Lo sentimos, hubo un error al cargar el gráfico.", "error");
+        $('.loading').removeClass('active');
+      }
+    });
+
+  }
+
+  var getGeneralStats = function (promoId) {
+
+    $.ajax({
+      url: '/api/stats/general/' + promoId,
+      type: 'GET',
+      beforeSend: function () {
+        $('.loading').addClass('active');
+      },
+      success: function (generalStats) {
+
+        //Render general stats
+
+        console.log(generalStats)
+
+        $('.unique-visualizations-stats').html(generalStats.friendVisualNumber);
+        $('.participation-stats').html(generalStats.participantsNumber);
+        $('.points-stats').html(generalStats.points);
+        $('.winners-number-stats').html(generalStats.winnersNumber);
+
+
+        $('.loading').removeClass('active');
+      },
+      error: function () {
+        swal("Error al actualizar las estadísticas", "Lo sentimos, hubo un error al cargar los datos generales..", "error");
+        $('.loading').removeClass('active');
+      }
+    });
+
+  }
+
+
+
   Chart.defaults.global.responsive = true;
   Chart.defaults.global.maintainAspectRatio = false;
 
@@ -767,7 +946,7 @@ $(document).ready(function () {
 
   //Set today at first calendar
   $('#rangestart').calendar('set date', new Date(), true, false);
- $('.startDateHidden').val((new Date()).toISOString());
+  $('.startDateHidden').val((new Date()).toISOString());
 
   //Second calendar
   var endcalendar = {

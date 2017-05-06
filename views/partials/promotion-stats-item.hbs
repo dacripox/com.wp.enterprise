@@ -1,58 +1,86 @@
-  <!-- ITEM - Promotion stats-->
-        <div class="ui segment stats-promo" style="display:none;">
-        <!--Top Warning message-->
-            <div class="ui warning message">
-                <div class="header">Lo sentimos. Las estadísticas no están disponibles.</div>
-                <ul class="list">
-                    <li>En breve, tendrás acceso a las estadísticas de tus promociones, en tiempo real.</li>
-                </ul>
-                </div>
-            <!--Statistic chart-->
-            <div class="ui vertical segment">
-                <canvas id="lineChart" width="400" height="400"></canvas>
-            </div>
+<!-- ITEM - Promotion stats-->
+<div class="ui segment stats-promo" style="display:none;">
+    <!--Top Warning message-->
+    <div class="ui warning message">
+        <div class="header">Lo sentimos. Las estadísticas no están disponibles.</div>
+        <ul class="list">
+            <li>En breve, tendrás acceso a las estadísticas de tus promociones, en tiempo real.</li>
+        </ul>
+    </div>
 
-            <!--Statistic figures-->
-            <div class="ui vertical segment ">
-                <div class="ui statistics">
-                    <div class="statistic">
-                        <div class="value">
-                            <i class="unhide icon"></i>22.900
-                        </div>
-                        <div class="label">
-                            Visualizaciones
-                        </div>
-                    </div>
-                    <div class="statistic">
-                        <div class="value">
-                            <i class="users icon"></i>1.200
-                        </div>
-                        <div class="label">
-                            Participantes
-                        </div>
-                    </div>
-                    <div class="statistic">
-                        <div class="value">
-                            <i class="empty star icon"></i> 129.000
-                        </div>
-                        <div class="label">
-                            Puntos acumulados
-                        </div>
-                    </div>
-                    <div class="statistic">
-                        <div class="value">
-                            <i class="gift icon"></i> 12
-                        </div>
-                        <div class="label">
-                            Ganadores
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Winners-->
-            {{>winners-segment}}
-
-            <!--Participants-->
-            {{participants-segment}}
+    <div class="ui selection dropdown stats-promotion">
+        <input type="hidden" name="stats-promotion">
+        <i class="dropdown icon"></i>
+        <div class="default text">Promoción</div>
+        <div class="menu">
+            
+            {{#each promotions}}
+            <div class="item" data-value="{{promoId}}"> {{trimString promoTitle 70}}... </div>
+            {{/each}}
         </div>
+    </div>
+
+    <div class="ui selection dropdown stats-date">
+        <input type="hidden" name="stats-date">
+        <i class="dropdown icon"></i>
+        <div class="default text">Fecha</div>
+        <div class="menu">
+            <div class="item" data-value="05/04/2017">05/04/2017</div>
+            <div class="item" data-value="19/04/2017">19/04/2017</div>
+
+        </div>
+    </div>
+    <!--Statistic chart-->
+    <div class="ui vertical segment">
+        <canvas id="lineChart" width="400" height="400"></canvas>
+    </div>
+
+
+
+    <!--Statistic figures-->
+    <div class="ui vertical segment ">
+        <div class="ui statistics">
+            <div class="statistic">
+                <div class="value">
+                    <i class="unhide icon"></i><span class="unique-visualizations-stats">0</span>
+                </div>
+                <div class="label">
+                    Visualizaciones
+                </div>
+            </div>
+            <div class="statistic">
+                <div class="value">
+                    <i class="users icon"></i><span class="participation-stats">0</span>
+                </div>
+                <div class="label">
+                    Participantes
+                </div>
+            </div>
+            <div class="statistic">
+                <div class="value">
+                    <i class="empty star icon"></i><span class="points-stats">0</span>
+                </div>
+                <div class="label">
+                    Puntos acumulados
+                </div>
+            </div>
+            <div class="statistic">
+                <div class="value">
+                    <i class="gift icon"></i><span class="winners-number-stats">0</span>
+                </div>
+                <div class="label">
+                    Ganadores
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Winners-->
+    {{>winners-segment}} 
+    <!-- end Winners-->
+
+    
+
+    <!--Participants-->
+    {{>participants-segment}}
+</div>

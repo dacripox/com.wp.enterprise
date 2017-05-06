@@ -1,28 +1,34 @@
 <div class="item">
     <div class="right floated content">
-        {{#unless promoEnded}}  <div class="ui button modifyPromo" data-id="{{_id}}"><i class=" pencil icon"></i>Modificar</div> {{/unless}}
-        <div class="ui button middle aligned disabled"><i class="line chart icon"></i>Estadísticas</div>
+        {{#unless promoEnded}}
+        <div class="ui button modifyPromo" data-id="{{_id}}"><i class=" pencil icon"></i>Modificar</div> {{/unless}}
+        <div class="ui button middle aligned statsPromo" data-promoid="{{promoId}}"><i class="line chart icon"></i>Estadísticas</div>
     </div>
-    <i class="yellow large newspaper middle aligned icon"></i>
+    <i class="big newspaper middle aligned icon"></i>
 
     <div class="content">
 
         <a class="header">{{promoTitle}}</a>
 
         <div class="description">
-            <p>Pendiente de lanzar</p>
+            <p>{{{trimString promoDescription 120}}}</p>
         </div>
         <div class="extra">
             <div class="meta">
                 <span class="">
                             <i class="calendar icon" ></i>{{dateToHuman startDate}} - {{dateToHuman endDate}}
-                        </span>
+                </span>
                 <span class="">
                             <i class="users icon"></i>{{participNumber}}
-                        </span>
+                </span>
                 <span class="">
                             <i class="gift icon"></i>{{winnersNumber}}
-                        </span>
+                </span>
+
+                <span class="">
+                    <i class="share alternate icon"></i><a href="https://whatspromo.com/{{promoId}}">https://whatspromo.com/{{promoId}}</a>
+                </span>
+
             </div>
         </div>
     </div>
