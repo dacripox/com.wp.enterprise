@@ -21,6 +21,13 @@ router.get('/stats/general/:promoId', mainController.generalStats);
  * GET
  */
 
+router.get('/stats/dates/promotion/:promoId', mainController.promotionStatsDates);
+
+
+/*
+ * GET
+ */
+
 router.get('/promotion/:promoId', mainController.showPromotion);
 
 
@@ -38,13 +45,23 @@ router.post('/promotion/', mainController.createUpdatePromotion);
 
 router.get('/available/:promoId', mainController.promotionIdAvailable);
 
-
-
 /*
  * GET
  */
 
 router.get('/promotions', mainController.getPromotions);
+
+/*
+ * GET
+ */
+
+router.get('/participants/:promoId', mainController.getParticipants);
+
+/*
+ * GET
+ */
+
+router.get('/winners/:promoId', mainController.getWinners);
 
 
 /*

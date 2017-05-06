@@ -1,5 +1,14 @@
 
 
+
+//Header menu
+$(document).ready(function () {
+  // create sidebar and attach to menu open
+  $('.ui.sidebar').sidebar('attach events', '.toc.item');
+
+});
+
+
 $("input[name='socialImageSRC']").change(function () {
   console.log('Promo image choosed');
 
@@ -398,13 +407,17 @@ $(document).ready(function () {
 
 
   /*Particiapants table (with DataTable)*/
-  $('#participants-table').DataTable({
-
+  var partTable = $('#participants-table').DataTable({
+    /*dom: 'Bfrtip',*/
+    lengthChange: false,
+    buttons: ['csv', 'excel', 'pdf'],
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json'
     }
-
   });
+
+  partTable.buttons().container()
+    .appendTo($('#participants-table_wrapper > div > div:nth-child(1) > div:nth-child(1)', partTable.table().container()));
 
   /*Promo url checker*/
   var timeOut;
@@ -539,26 +552,111 @@ $(document).ready(function () {
 
 
   /*Statistics - Chart.js and General stats*/
+  $('.statsPromo').click(function () {
 
-  $('.ui.dropdown.stats-date').dropdown({
+    var promoId = $(this).data('promoid');
+    console.log('statsPromo: ' + promoId);
 
-    onChange: function (date, text, $selectedItem) {
-      console.log(date);
-      var promoId = $(".ui.dropdown.stats-promotion").dropdown('get value');
-      getBarchartStats(promoId, date);
+    $('.ui.dropdown.stats-promotion').dropdown('set selected', promoId);
 
-    }
+    showStatsPromo();
+
   });
 
   $('.ui.dropdown.stats-promotion').dropdown({
 
     onChange: function (promoId, text, $selectedItem) {
       console.log(promoId);
-      var date = $(".ui.dropdown.stats-date").dropdown('get value');
-      getBarchartStats(promoId, date);
-      getGeneralStats(promoId);
+
+      setDatesForPromotion(promoId);
+      setTimeout(function (params) {
+
+        var date = $(".ui.dropdown.stats-date").dropdown('get value');
+        getGeneralStats(promoId);
+        getBarchartStats(promoId, date);
+
+      }, 2500);
+
+      getWinners(promoId);
+      getParticipants(promoId);
     }
   });
+
+
+  function getWinners(promoId) {
+    var source = $("#winners-segment").html();
+    var template = Handlebars.compile(source);
+
+
+    $.ajax({
+      url: '/api/winners/' + promoId,
+      type: 'GET',
+      beforeSend: function () {
+        $('.loading').addClass('active');
+      },
+      success: function (winners) {
+        var context = { winners: winners };
+        var html = template(context);
+      },
+      error: function () {
+        swal("Error al actualizar los ganadores", "Lo sentimos, hubo un error al cargar los ganadores para la promoción.", "error");
+      }
+    });
+
+
+  }
+
+  function getParticipants(promoId) {
+
+  }
+
+
+
+
+  $('.ui.dropdown.stats-date').dropdown({
+
+    onChange: function (date, text, $selectedItem) {
+      console.log(date);
+      var promoId = $(".ui.dropdown.stats-promotion").dropdown('get value');
+
+      getBarchartStats(promoId, date);
+
+    }
+  });
+
+
+  var setDatesForPromotion = function (promoId) {
+
+    $.ajax({
+      url: '/api/stats/dates/promotion/' + promoId,
+      type: 'GET',
+      beforeSend: function () {
+        $('.loading').addClass('active');
+      },
+      success: function (dates) {
+        var lastDate = "";
+        var htmlDates = new Array();
+        for (var i = 0; i < dates.length; i++) {
+          var date = new Date(dates[i]);
+
+          var day = date.getDate();
+          var month = date.getMonth() + 1;
+          var year = date.getFullYear();
+          var htmlDate = day + '/' + month + '/' + year;
+
+          htmlDates.push('<div class="item" data-value="' + htmlDate + '">' + htmlDate + '</div>');
+          lastDate = htmlDate;
+        }
+        $(".ui.dropdown.stats-date").find('.menu').html(htmlDates);
+        $(".ui.dropdown.stats-date").dropdown('set selected', lastDate);
+      },
+      error: function () {
+        swal("Error al actualizar las estadísticas", "Lo sentimos, hubo un error al cargar las fechas de las estadísticas.", "error");
+      }
+    });
+
+  }
+
 
   var getBarchartStats = function (promoId, date) {
 

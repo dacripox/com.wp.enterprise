@@ -9,25 +9,27 @@
     </div>
 
     <div class="ui selection dropdown stats-promotion">
-            <input type="hidden" name="stats-promotion">
-            <i class="dropdown icon"></i>
-            <div class="default text">Promoción</div>
-            <div class="menu">
-                <div class="item" data-value="25855521">La casa feliz...</div>
-                <div class="item" data-value="manzanaverdess">Calabazas de madera verdes...</div>
-            </div>
+        <input type="hidden" name="stats-promotion">
+        <i class="dropdown icon"></i>
+        <div class="default text">Promoción</div>
+        <div class="menu">
+            
+            {{#each promotions}}
+            <div class="item" data-value="{{promoId}}"> {{trimString promoTitle 70}}... </div>
+            {{/each}}
         </div>
+    </div>
 
-         <div class="ui selection dropdown stats-date">
-            <input type="hidden" name="stats-date">
-            <i class="dropdown icon"></i>
-            <div class="default text">Fecha</div>
-            <div class="menu">
-                <div class="item" data-value="05/04/2017">05/04/2017</div>
-                <div class="item" data-value="19/04/2017">19/04/2017</div>
-                {{generateDates promotion.startDate promotion.endDate}}
-            </div>
+    <div class="ui selection dropdown stats-date">
+        <input type="hidden" name="stats-date">
+        <i class="dropdown icon"></i>
+        <div class="default text">Fecha</div>
+        <div class="menu">
+            <div class="item" data-value="05/04/2017">05/04/2017</div>
+            <div class="item" data-value="19/04/2017">19/04/2017</div>
+
         </div>
+    </div>
     <!--Statistic chart-->
     <div class="ui vertical segment">
         <canvas id="lineChart" width="400" height="400"></canvas>
@@ -64,7 +66,7 @@
             </div>
             <div class="statistic">
                 <div class="value">
-                    <i class="gift icon"></i><span class="winners-number-stats">0</span> 
+                    <i class="gift icon"></i><span class="winners-number-stats">0</span>
                 </div>
                 <div class="label">
                     Ganadores
@@ -74,8 +76,11 @@
     </div>
 
     <!--Winners-->
-    {{>winners-segment}}
+    {{>winners-segment}} 
+    <!-- end Winners-->
+
+    
 
     <!--Participants-->
-    {{participants-segment}}
+    {{>participants-segment}}
 </div>

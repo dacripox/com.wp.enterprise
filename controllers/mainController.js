@@ -7,6 +7,7 @@ const uuidV4 = require('uuid/v4');
 var Jimp = require("jimp");
 
 
+
 let getPromotionsByCompanyId = async (companyId) => {
     try {
         let response = await fetch('http://localhost:3000/promotion/company/' + companyId, { method: 'get' });
@@ -248,6 +249,7 @@ module.exports = {
                     res.cookie('companyId', company._id, options) // options is optional
 
 
+
                     //Desktop view
                     res.render('desktop-version', { title: 'WhatsPromo - Panel de control', promotions: promotions });
 
@@ -300,7 +302,7 @@ module.exports = {
         var year = req.params.year;
 
         try {
-            let response = await fetch('http://localhost:3000/stats/barchart/promotion/' + promoId+'/date/'+day+'/'+month+'/'+year, { method: 'GET' });
+            let response = await fetch('http://localhost:3000/stats/barchart/promotion/' + promoId + '/date/' + day + '/' + month + '/' + year, { method: 'GET' });
             let data = await response.json();
             if (response.status !== 200) {
                 return res.status(500).json({ response: response });
@@ -316,9 +318,75 @@ module.exports = {
         }
 
     },
-        /**
-     * mainController.generalStats()
+    /**
+     * mainController.promotionStatsDates()
      */
+    promotionStatsDates: async function (req, res) {
+        var promoId = req.params.promoId;
+        var day = req.params.day;
+        var month = req.params.month;
+        var year = req.params.year;
+
+        try {
+            let response = await fetch('http://localhost:3000/promotion/id/' + promoId, { method: 'GET' });
+            let data = await response.json();
+            if (response.status !== 200) {
+                return res.status(500).json({ response: response });
+            }
+
+            async function getDates(startDate, stopDate) {
+                var dateArray = new Array();
+
+
+                let start = new Date(startDate);
+                start.setHours(0);
+                start.setMinutes(0);
+
+                var currentDate = new Date(start);
+
+
+                let end = new Date(stopDate);
+                end.setHours(0);
+                end.setMinutes(0);
+
+                var stopDate = new Date(end);
+
+                while (currentDate <= stopDate) {
+                    dateArray.push(new Date(currentDate))
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+                return dateArray;
+            }
+
+            let now = Date.now();
+            let endDatePromo = Date.parse(data.endDate);
+
+            let endDate = endDatePromo < now ? endDatePromo : now;
+            let startDate = Date.parse(data.startDate);
+
+            let dateArray = await getDates(startDate, endDate);
+
+            let datesArray = new Array();
+            for (var i = 0; i < dateArray.length; i++) {
+                var date = dateArray[i];
+                datesArray.push(date);
+            }
+
+
+            return res.status(200).json(datesArray);
+
+        } catch (error) {
+            console.error('Fetch error when retrieving barchar stats');
+            console.error(error);
+            return res.status(500).json({
+                error: error
+            });
+        }
+
+    },
+    /**
+ * mainController.generalStats()
+ */
     generalStats: async function (req, res) {
         var promoId = req.params.promoId;
 
@@ -394,14 +462,14 @@ module.exports = {
         promotion.fullAddress = req.body.fullAddress;
         promotion.companyId = req.cookies.companyId;
         promotion.trollNumber = req.body.trollNumber;
-       // if(req.body.shareMessages){
+        // if(req.body.shareMessages){
         //    let shareMessages = [];
         //    shareMessages.push(req.body.shareMessages);
         //    promotion.shareMessages= shareMessages;
         //}else{
         //    promotion.shareMessages = undefined;
-       // }
-       promotion.shareMessages = req.body.shareMessages;
+        // }
+        promotion.shareMessages = req.body.shareMessages;
         promotion.facebookTrackingPixel = req.body.facebookTrackingPixel;
         promotion.googleTrackingPixel = req.body.googleTrackingPixel;
 
@@ -490,6 +558,52 @@ module.exports = {
                 error: err
             });
         });
+    },
+
+    /**
+     * mainController.getWinners()
+     */
+    getWinners: async function (req, res) {
+        var promoId = req.params.promoId;
+
+
+        console.log('Finding winners for promotion: ' + promo_id);
+        let formData = {};
+        try {
+            let response = await request.get({ url: 'http://localhost:3000/winner/promotion/' + promo_id, form: formData });
+            res.status(200).json(response);
+        } catch (error) {
+            console.error('Fetch error winners. ');
+            console.error(error);
+            return res.status(500).json({
+                error: error
+            });
+        }
+
+
+    },
+
+      /**
+     * mainController.getParticipants()
+     */
+    getParticipants: async function (req, res) {
+        var promoId = req.params.promoId;
+
+
+        console.log('Finding Participants for promotion: ' + promo_id);
+        let formData = {};
+        try {
+            let response = await request.get({ url: 'http://localhost:3000/participation/promotion/' + promo_id +'/full', form: formData });
+            res.status(200).json(response);
+        } catch (error) {
+            console.error('Fetch error participations with full user details. ');
+            console.error(error);
+            return res.status(500).json({
+                error: error
+            });
+        }
+
+
     }
 
 }

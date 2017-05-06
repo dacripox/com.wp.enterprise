@@ -33,6 +33,37 @@
 {{/contentFor}}
 
 
+{{#contentFor 'HBTemplates'}}
+<script id="winner-list-item" type="text/x-handlebars-template">
+    <div class="item">
+        <div class="right floated content">
+            <div class="ui label "><i class="call user icon"></i>{{displayName}}</div>
+            <div class="ui label"><i class="mail chart icon"></i>{{contact}}</div>
+        </div>
+    
+
+        <div class="content">
+            {{#if profileImg}} <img class="ui mini avatar circular image" src="{{profileImg}}"> {{else}} <i class="circular large user  icon"></i>          {{/if}}<i class="yellow star middle aligned icon"></i>{{points}}
+        </div>
+    </div>
+</script>
+
+
+<script id="winners-segment" type="text/x-handlebars-template">
+    <div class="ui segment winners-segment">
+    
+    <div class="ui middle aligned divided list  ">
+        <h3 class="ui header">Ganadores del sorteo. ¡Debes contactar con los premiados!</h3>
+
+        <!--Winner Item-->
+        {{>winner-list-item}}
+
+    </div>
+</div>
+</script>
+{{/contentFor}}
+
+
 <div class="ui main container">
 
     

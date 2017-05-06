@@ -9,7 +9,7 @@ var favicon = require('serve-favicon')
 app.use(favicon(path.join(__dirname, 'assets/favicons', 'favicon.ico')))
 
 var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({limit: '5mb', extended: false }));
+app.use(bodyParser.urlencoded({ limit: '5mb', extended: false }));
 
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -26,31 +26,36 @@ app.engine('hbs', hbs.express4({
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
-hbs.registerHelper("math", function(lvalue, operator, rvalue, options) {
-    lvalue = parseFloat(lvalue);
-    rvalue = parseFloat(rvalue);
-        
-    return {
-        "+": lvalue + rvalue,
-        "-": lvalue - rvalue,
-        "*": lvalue * rvalue,
-        "/": lvalue / rvalue,
-        "%": lvalue % rvalue
-    }[operator];
+hbs.registerHelper("math", function (lvalue, operator, rvalue, options) {
+  lvalue = parseFloat(lvalue);
+  rvalue = parseFloat(rvalue);
+
+  return {
+    "+": lvalue + rvalue,
+    "-": lvalue - rvalue,
+    "*": lvalue * rvalue,
+    "/": lvalue / rvalue,
+    "%": lvalue % rvalue
+  }[operator];
 });
 
-hbs.registerHelper("dateToHuman", function(date) {
+hbs.registerHelper("dateToHuman", function (date) {
   let dateTime = new Date(date);
-    return dateTime.toLocaleDateString() +' - '+ dateTime.toLocaleTimeString();
+  return dateTime.toLocaleDateString() + ' - ' + dateTime.toLocaleTimeString();
 });
 
-hbs.registerHelper("not", function(obj) {
+hbs.registerHelper("not", function (obj) {
   return !obj;
 });
 
-app.use('/assets',express.static(path.join(__dirname, 'assets')));
-app.use('/vendor',express.static(path.join(__dirname, 'vendor')));
-app.use('/public',express.static(path.join(__dirname, 'public')));
+
+hbs.registerHelper('trimString', function(passedString,endPos) {
+    return passedString.substring(0,endPos);
+});
+
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/vendor', express.static(path.join(__dirname, 'vendor')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/', mainRoutes);
 app.use('/promociones', mainRoutes);
 app.use('/editar-promocion', mainRoutes);
@@ -97,7 +102,7 @@ app.use('/auth/stats', auth, stats);
 
 
 app.listen(process.env.PORT || 3002, function () {
-  console.log('WhatsPromo Enterprise listening on port '+(process.env.PORT || 3002)+'!');
+  console.log('WhatsPromo Enterprise listening on port ' + (process.env.PORT || 3002) + '!');
 
   console.log(",--.   ,--.,--.               ,--.         ,------.                                 ");
   console.log("|  |   |  ||  ,---.  ,--,--.,-'  '-. ,---. |  .--. ',--.--. ,---. ,--,--,--. ,---.  ");
