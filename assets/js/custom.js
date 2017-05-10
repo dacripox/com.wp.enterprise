@@ -1,5 +1,12 @@
 
 
+//Reload page if companyId not set in cookies
+$(document).ready(function () {
+
+  if (!$.cookie("companyId")) location.reload();
+
+});
+
 
 //Header menu
 $(document).ready(function () {
