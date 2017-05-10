@@ -238,7 +238,7 @@ module.exports = {
 
                     let options = {
                         maxAge: 1000 * 60 * 15, // would expire after 15 minutes
-                        httpOnly: true, // The cookie only accessible by the web server
+                        // httpOnly: true, // The cookie only accessible by the web server
                         signed: false // Indicates if the cookie should be signed
                     }
 
