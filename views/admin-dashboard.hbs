@@ -1,0 +1,46 @@
+{{!< default}} 
+
+
+
+
+
+<div class="ui main container">
+
+    <table class="ui celled table">
+  <thead>
+    <tr>
+      <th>Fecha creación</th>
+      <th>ID Referido</th>
+      <th>ID</th>
+      <th>Puntos</th>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Teléfono</th>
+      <th>Facebook ID</th>
+      <th>Google ID</th>
+    </tr>
+  </thead>
+  <tbody>
+   
+   {{#each users}}
+    <tr>
+      <td>{{createdDate}}</td>
+      <td>{{refFriendId}}</td>
+      <td>{{userId}}</td>
+      <td>{{points}}</td>
+      <td>{{user.firstName}} {{user.lastName}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.phone}}</td>
+      <td>{{user.facebookId}}</td>
+      <td>{{user.googleId}}</td>
+    </tr>
+    {{/each}}
+   
+  </tbody>
+</table>
+
+  
+
+
+</div>
+<!--end .main.container-->
