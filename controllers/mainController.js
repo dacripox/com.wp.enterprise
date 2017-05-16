@@ -8,6 +8,19 @@ var Jimp = require("jimp");
 
 
 
+let getParticipantsByPromoId = async (promoId) => {
+    console.log('Finding Participants for promotion: ' + promoId);
+    let formData = {};
+    try {
+        let response = await request.get({ url: 'http://localhost:3000/participation/promotion/' + promoId + '/full', form: formData });
+        return JSON.parse(response);
+    } catch (error) {
+        console.error('Fetch error participations with full user details. ');
+        console.error(error);
+       
+    }
+}
+
 let getPromotionsByCompanyId = async (companyId) => {
     try {
         let response = await fetch('http://localhost:3000/promotion/company/' + companyId, { method: 'get' });
@@ -583,9 +596,9 @@ module.exports = {
 
     },
 
-      /**
-     * mainController.getParticipants()
-     */
+    /**
+   * mainController.getParticipants()
+   */
     getParticipants: async function (req, res) {
         var promoId = req.params.promoId;
 
@@ -593,7 +606,7 @@ module.exports = {
         console.log('Finding Participants for promotion: ' + promoId);
         let formData = {};
         try {
-            let response = await request.get({ url: 'http://localhost:3000/participation/promotion/' + promoId +'/full', form: formData });
+            let response = await request.get({ url: 'http://localhost:3000/participation/promotion/' + promoId + '/full', form: formData });
             res.status(200).json(response);
         } catch (error) {
             console.error('Fetch error participations with full user details. ');
@@ -602,6 +615,17 @@ module.exports = {
                 error: error
             });
         }
+
+
+    },
+
+    showAdminDashboard: async function (req, res) {
+        var promoId = req.params.promoId;
+
+        let users = await getParticipantsByPromoId(promoId);
+        //Dashboard view
+        return res.render('admin-dashboard', { title: 'WhatsPromo - Panel de control', users: users });
+
 
 
     }

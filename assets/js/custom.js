@@ -464,6 +464,9 @@ $(document).ready(function () {
     $('.list-promo').hide();
     $('.stats-promo-step').removeClass('active');
     $('.list-promo-step').removeClass('active');
+
+    //Refresh map
+    google.maps.event.trigger(map, "resize");
   };
 
   var showStatsPromo = function () {
