@@ -17,7 +17,7 @@ let getParticipantsByPromoId = async (promoId) => {
     } catch (error) {
         console.error('Fetch error participations with full user details. ');
         console.error(error);
-       
+
     }
 }
 
@@ -213,10 +213,13 @@ module.exports = {
         var promoId = req.params.promoId;
         var refFriend = req.params.refFriend;
 
+        //HOTFIX! (If companyId and companyEmaail not set, refresh page to retrive it)
         let companyEmail = req.cookies.companyEmail;
         console.log(companyEmail);
-
         if (!companyEmail) res.redirect(req.get('referer'));
+        let companyId = req.cookies.companyId;
+        console.log(companyId);
+        if (!companyId) res.redirect(req.get('referer'));
 
         //Create company if not exists
         try {
@@ -486,6 +489,7 @@ module.exports = {
         promotion.facebookTrackingPixel = req.body.facebookTrackingPixel;
         promotion.googleTrackingPixel = req.body.googleTrackingPixel;
 
+        //If POST have promoId, update promotion with that ID
         if (req.body.updatePromotionId) {
             promotion.updatePromotionId = req.body.updatePromotionId;
             let updatedPromo = await updatePromotion(promotion);
